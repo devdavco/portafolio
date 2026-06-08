@@ -10,7 +10,7 @@ import { ScrollReveal } from '../../directives/scroll-reveal';
 })
 export class Contact {
   protected readonly lang = inject(LanguageService);
-  protected readonly email = 'devdavco@pm.me';
+  protected readonly email = 'hola@davidcorrales.dev';
   protected readonly linkedin = 'https://www.linkedin.com/in/juandavidcorrales/';
   protected readonly github = 'https://github.com/devdavco';
 }
