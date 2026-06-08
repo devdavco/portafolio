@@ -1,0 +1,44 @@
+.certifications {
+  background: var(--bg-secondary);
+}
+
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+}
+
+.cert-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  opacity: 0.7;
+}
+
+.cert-card:hover {
+  opacity: 1;
+}
+
+.cert-icon {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: var(--radius-sm);
+  color: var(--accent-light);
+  border: 1px solid var(--border);
+}
+
+.cert-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.cert-desc {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}

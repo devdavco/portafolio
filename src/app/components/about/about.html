@@ -1,0 +1,24 @@
+<section id="about" class="about">
+  <div class="container">
+    <div appScrollReveal>
+      <h2 class="section-title"><span>#</span> {{ lang.t().about.title }}</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text card" appScrollReveal>
+        <p>{{ lang.t().about.text }}</p>
+        <div class="about-location">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          {{ lang.t().about.location }}
+        </div>
+      </div>
+      <div class="about-interests" appScrollReveal>
+        @for (interest of lang.t().about.interests; track interest) {
+          <span class="tag">{{ interest }}</span>
+        }
+      </div>
+    </div>
+  </div>
+</section>

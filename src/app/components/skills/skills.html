@@ -1,0 +1,17 @@
+<section id="skills" class="skills">
+  <div class="container">
+    <div appScrollReveal>
+      <h2 class="section-title"><span>#</span> {{ lang.t().skills.title }}</h2>
+      <p class="section-subtitle">{{ lang.t().skills.subtitle }}</p>
+    </div>
+    <div class="skills-grid">
+      @for (skill of skills; track skill.name) {
+        <div class="skill-card card" appScrollReveal>
+          <i [class]="skill.icon + ' colored skill-icon'"></i>
+          <h3 class="skill-name">{{ skill.name }}</h3>
+          <span class="skill-level">{{ lang.t().skills.level }}</span>
+        </div>
+      }
+    </div>
+  </div>
+</section>

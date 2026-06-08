@@ -1,0 +1,30 @@
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--text-primary);
+}
+
+.contact-card svg {
+  flex-shrink: 0;
+  color: var(--accent-light);
+}
+
+.contact-label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  margin-bottom: 0.15rem;
+}
+
+.contact-value {
+  font-weight: 500;
+  font-size: 0.95rem;
+}

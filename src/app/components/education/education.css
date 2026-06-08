@@ -1,0 +1,41 @@
+.education {
+  background: var(--bg-secondary);
+}
+
+.education-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 600px;
+}
+
+.education-icon {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(59, 130, 246, 0.12);
+  border-radius: var(--radius);
+  color: var(--accent-light);
+  border: 1px solid var(--border);
+}
+
+.education-degree {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.education-university {
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 480px) {
+  .education-card {
+    flex-direction: column;
+    text-align: center;
+  }
+}

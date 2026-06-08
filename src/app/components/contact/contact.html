@@ -1,0 +1,36 @@
+<section id="contact" class="contact">
+  <div class="container">
+    <div appScrollReveal>
+      <h2 class="section-title"><span>#</span> {{ lang.t().contact.title }}</h2>
+      <p class="section-subtitle">{{ lang.t().contact.subtitle }}</p>
+    </div>
+    <div class="contact-grid" appScrollReveal>
+      <a [href]="'mailto:' + email" class="contact-card card">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="2" y="4" width="20" height="16" rx="2"/>
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+        </svg>
+        <div>
+          <span class="contact-label">Email</span>
+          <span class="contact-value">{{ email }}</span>
+        </div>
+      </a>
+
+      <a [href]="linkedin" target="_blank" rel="noopener noreferrer" class="contact-card card">
+        <i class="devicon-linkedin-plain colored" style="font-size: 24px"></i>
+        <div>
+          <span class="contact-label">LinkedIn</span>
+          <span class="contact-value">juandavidcorrales</span>
+        </div>
+      </a>
+
+      <a [href]="github" target="_blank" rel="noopener noreferrer" class="contact-card card">
+        <i class="devicon-github-original colored" style="font-size: 24px"></i>
+        <div>
+          <span class="contact-label">GitHub</span>
+          <span class="contact-value">devdavco</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>

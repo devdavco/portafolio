@@ -1,0 +1,24 @@
+<section id="certifications" class="certifications">
+  <div class="container">
+    <div appScrollReveal>
+      <h2 class="section-title"><span>#</span> {{ lang.t().certifications.title }}</h2>
+      <p class="section-subtitle">{{ lang.t().certifications.subtitle }}</p>
+    </div>
+    <div class="cert-grid">
+      @for (item of placeholders; track item) {
+        <div class="cert-card card" appScrollReveal>
+          <div class="cert-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="8" r="6"/>
+              <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="cert-title">{{ lang.t().certifications.placeholder }} {{ item }}</h3>
+            <p class="cert-desc">{{ lang.t().certifications.comingSoon }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

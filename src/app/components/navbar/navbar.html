@@ -1,0 +1,26 @@
+<nav class="navbar" [class.scrolled]="scrolled()">
+  <div class="navbar-inner container">
+    <a href="#home" class="logo" (click)="closeMenu()">
+      <span class="logo-bracket">&lt;</span>DC<span class="logo-bracket">/&gt;</span>
+    </a>
+
+    <button class="menu-toggle" (click)="toggleMenu()" [attr.aria-expanded]="menuOpen()" aria-label="Menu">
+      <span class="bar" [class.open]="menuOpen()"></span>
+      <span class="bar" [class.open]="menuOpen()"></span>
+      <span class="bar" [class.open]="menuOpen()"></span>
+    </button>
+
+    <ul class="nav-links" [class.open]="menuOpen()">
+      @for (link of links; track link.id) {
+        <li>
+          <a [href]="'#' + link.id" (click)="closeMenu()">{{ lang.t().nav[link.key] }}</a>
+        </li>
+      }
+      <li>
+        <button class="lang-btn" (click)="toggleLang()">
+          {{ lang.currentLang() === 'es' ? 'EN' : 'ES' }}
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>
