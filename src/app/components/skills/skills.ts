@@ -18,12 +18,7 @@ export class Skills {
 
   protected readonly skills: Skill[] = [
     { name: 'Git / GitHub', icon: 'devicon-git-plain' },
-    { name: 'HTML5', icon: 'devicon-html5-plain' },
-    { name: 'CSS3', icon: 'devicon-css3-plain' },
-    { name: 'JavaScript', icon: 'devicon-javascript-plain' },
     { name: 'SQL', icon: 'devicon-postgresql-plain' },
-    { name: 'Java', icon: 'devicon-java-plain' },
-    { name: 'Python', icon: 'devicon-python-plain' },
-    { name: 'Angular', icon: 'devicon-angularjs-plain' },
+    { name: 'Java', icon: 'devicon-java-plain' }
   ];
 }
