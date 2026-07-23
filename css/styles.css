@@ -1,3 +1,63 @@
+/* ===================================================
+   Design tokens
+   =================================================== */
+:root {
+  --bg-primary: #0b1120;
+  --bg-secondary: #111827;
+  --bg-card: #162032;
+  --bg-card-hover: #1c2a42;
+  --accent: #3b82f6;
+  --accent-light: #60a5fa;
+  --accent-glow: rgba(59, 130, 246, 0.25);
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border: #1e3a5f;
+  --border-light: #2d4a6f;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  --transition: 0.3s ease;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+/* ===================================================
+   Base / reset
+   =================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--accent-light);
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+a:hover {
+  color: var(--accent);
+}
+
+/* ===================================================
+   Layout: landing
+   =================================================== */
 .landing {
   position: relative;
   min-height: 100vh;
@@ -15,11 +75,7 @@
   transform: translateX(-50%);
   width: min(700px, 90vw);
   height: 700px;
-  background: radial-gradient(
-    circle,
-    var(--accent-glow) 0%,
-    transparent 65%
-  );
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 65%);
   pointer-events: none;
   z-index: 0;
 }
@@ -34,7 +90,9 @@
   gap: 2rem;
 }
 
-/* Hero */
+/* ===================================================
+   Hero
+   =================================================== */
 .hero {
   text-align: center;
   display: flex;
@@ -79,7 +137,9 @@
   text-wrap: pretty;
 }
 
-/* Panels */
+/* ===================================================
+   Panels
+   =================================================== */
 .panel {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -149,7 +209,9 @@
   font-family: var(--font-mono);
 }
 
-/* Contact */
+/* ===================================================
+   Contact
+   =================================================== */
 .contact-links {
   display: flex;
   flex-direction: column;
@@ -187,7 +249,9 @@
   word-break: break-all;
 }
 
-/* Footer */
+/* ===================================================
+   Footer
+   =================================================== */
 .footer {
   text-align: center;
   color: var(--text-muted);
@@ -195,6 +259,9 @@
   padding-top: 1rem;
 }
 
+/* ===================================================
+   Responsive
+   =================================================== */
 @media (max-width: 560px) {
   .info-list li,
   .contact-link {

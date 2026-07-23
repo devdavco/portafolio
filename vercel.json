@@ -1,8 +1,3 @@
 {
-    "framework": "angular",
-    "buildCommand": "ng build",
-    "outputDirectory": "dist/portafolio/browser",
-    "rewrites": [
-      { "source": "/((?!_next|assets|favicon.ico|icon.*|manifest.*).*)", "destination": "/" }
-    ]
-  }
+  "cleanUrls": true
+}
