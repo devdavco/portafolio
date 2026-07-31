@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LSP — Sistema de Usuarios | David Corrales</title>
+  <meta name="theme-color" content="#0b1120" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-primary:    #0b1120;
+      --bg-secondary:  #111827;
+      --bg-card:       #162032;
+      --bg-card-hover: #1c2a42;
+      --accent:        #3b82f6;
+      --accent-light:  #60a5fa;
+      --accent-glow:   rgba(59,130,246,0.25);
+      --text-primary:  #e2e8f0;
+      --text-secondary:#94a3b8;
+      --text-muted:    #64748b;
+      --border:        #1e3a5f;
+      --border-light:  #2d4a6f;
+      --radius:        12px;
+      --radius-sm:     8px;
+      --transition:    0.3s ease;
+      --font-sans:     "Inter", system-ui, sans-serif;
+      --font-mono:     "JetBrains Mono", monospace;
+      --bad:           #f87171;
+      --bad-bg:        rgba(248,113,113,0.08);
+      --bad-border:    rgba(248,113,113,0.3);
+      --good:          #4ade80;
+      --good-bg:       rgba(74,222,128,0.08);
+      --good-border:   rgba(74,222,128,0.3);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent-light); text-decoration: none; transition: color var(--transition); }
+    a:hover { color: var(--accent); }
+
+    .page {
+      position: relative;
+      min-height: 100vh;
+      padding: 3rem 1.5rem 5rem;
+      overflow: hidden;
+    }
+
+    .glow {
+      position: fixed;
+      top: -20%; left: 50%;
+      transform: translateX(-50%);
+      width: min(700px, 90vw);
+      height: 700px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .85rem;
+      color: var(--text-muted);
+      transition: color var(--transition);
+    }
+    .back:hover { color: var(--accent-light); }
+
+    .hero { display: flex; flex-direction: column; gap: .75rem; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: .35rem .9rem;
+      border-radius: 999px;
+      background: rgba(59,130,246,0.12);
+      border: 1px solid var(--border-light);
+      color: var(--accent-light);
+      font-family: var(--font-mono);
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      width: fit-content;
+    }
+
+    .title {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 700;
+      line-height: 1.15;
+    }
+    .title span { color: var(--accent-light); }
+
+    .lead {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      max-width: 52ch;
+    }
+
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .panel.rule { border-left: 3px solid var(--accent); }
+    .panel.rule p { font-size: .95rem; color: var(--text-secondary); }
+    .panel-title {
+      font-size: .85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+    .panel > p {
+      font-size: .95rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: .5rem;
+    }
+
+    ic {
+      font-family: var(--font-mono);
+      font-size: .85em;
+      color: var(--accent-light);
+      background: rgba(59,130,246,0.1);
+      padding: .1em .35em;
+      border-radius: 4px;
+    }
+
+    .code-block {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .55rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-primary);
+    }
+    .code-dots { display: flex; gap: .35rem; }
+    .code-dots span { width: 9px; height: 9px; border-radius: 50%; background: var(--border-light); }
+    .code-filename { font-family: var(--font-mono); font-size: .72rem; color: var(--text-muted); }
+    .code-status {
+      font-family: var(--font-mono);
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: .2rem .6rem;
+      border-radius: 999px;
+    }
+    .code-status.bad  { color: var(--bad);  background: var(--bad-bg); }
+    .code-status.good { color: var(--good); background: var(--good-bg); }
+
+    pre {
+      font-family: var(--font-mono);
+      font-size: .8rem;
+      line-height: 1.8;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      color: #cdd6f4;
+    }
+    .kw { color: #c792ea; }
+    .cl { color: #80cbc4; }
+    .fn { color: #82aaff; }
+    .st { color: #c3e88d; }
+    .cm { color: #546e7a; font-style: italic; }
+    .an { color: #f07178; }
+    .nm { color: #f78c6c; }
+
+    .verdict { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1rem; }
+    .verdict-card { flex: 1 1 240px; border-radius: var(--radius-sm); padding: 1rem 1.25rem; border: 1px solid; }
+    .verdict-card.bad  { border-color: var(--bad-border);  background: var(--bad-bg); }
+    .verdict-card.good { border-color: var(--good-border); background: var(--good-bg); }
+    .verdict-label { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .5rem; }
+    .verdict-card.bad  .verdict-label { color: var(--bad); }
+    .verdict-card.good .verdict-label { color: var(--good); }
+    .verdict-card p { font-size: .88rem; color: var(--text-muted); line-height: 1.6; }
+
+    .tree {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1.25rem 1.5rem;
+      font-family: var(--font-mono);
+      font-size: .82rem;
+      line-height: 2;
+      color: #cdd6f4;
+      margin-top: .75rem;
+    }
+    .tree .dir   { color: var(--accent-light); }
+    .tree .iface { color: #80cbc4; }
+    .tree .file  { color: var(--text-muted); }
+    .tree .note  { color: var(--border-light); font-style: italic; }
+
+    .divider { border: none; border-top: 1px solid var(--border); }
+    .footer { text-align: center; color: var(--text-muted); font-size: .85rem; padding-top: .5rem; }
+
+    @media (max-width: 560px) {
+      .verdict { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <div class="glow" aria-hidden="true"></div>
+
+  <div class="content">
+
+    <a href="/" class="back">← davidcorrales.dev</a>
+
+    <header class="hero">
+      <span class="badge">SOLID — Principio L</span>
+      <h1 class="title">LSP en un sistema de <span>usuarios</span></h1>
+      <p class="lead">
+        Ejemplo sencillo: un usuario invitado no puede cambiar su contraseña, y eso rompe el contrato de la clase base.
+      </p>
+    </header>
+
+    <div class="panel rule">
+      <p>
+        Tenemos una app con dos tipos de usuario: registrados e invitados.
+        Ambos pueden hacer <ic>login()</ic>, pero solo los registrados tienen cuenta y pueden
+        <ic>cambiarPassword()</ic> o <ic>cerrarSesion()</ic>.
+        El problema ocurre cuando ambos heredan de la misma clase base que promete esas acciones.
+      </p>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- violation -->
+    <section class="panel">
+      <h2 class="panel-title">❌ Violación — UsuarioInvitado</h2>
+      <p>
+        <ic>UsuarioInvitado</ic> extiende <ic>Usuario</ic> pero lanza una excepción en
+        <ic>cambiarPassword()</ic> porque los invitados no tienen cuenta.
+        El sistema que gestiona usuarios no lo sabe y explota en runtime.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-filename">Usuario.java</span>
+        </div>
+<pre><span class="kw">public class</span> <span class="cl">Usuario</span> {
+    <span class="kw">protected</span> String nombre;
+    <span class="kw">protected</span> String email;
+
+    <span class="kw">public</span> <span class="cl">Usuario</span>(String nombre, String email) {
+        <span class="kw">this</span>.nombre = nombre;
+        <span class="kw">this</span>.email  = email;
+    }
+
+    <span class="kw">public void</span> <span class="fn">login</span>() {
+        System.out.println(nombre + <span class="st">" ha iniciado sesión"</span>);
+    }
+
+    <span class="kw">public void</span> <span class="fn">cambiarPassword</span>(String nueva) {
+        System.out.println(<span class="st">"Contraseña actualizada"</span>);
+    }
+
+    <span class="kw">public void</span> <span class="fn">cerrarSesion</span>() {
+        System.out.println(nombre + <span class="st">" ha cerrado sesión"</span>);
+    }
+}</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-filename">UsuarioInvitado.java</span>
+          <span class="code-status bad">Viola LSP</span>
+        </div>
+<pre><span class="kw">public class</span> <span class="cl">UsuarioInvitado</span> <span class="kw">extends</span> <span class="cl">Usuario</span> {
+
+    <span class="kw">public</span> <span class="cl">UsuarioInvitado</span>() {
+        <span class="kw">super</span>(<span class="st">"Invitado"</span>, <span class="st">""</span>);
+    }
+
+    <span class="an">@Override</span>
+    <span class="kw">public void</span> <span class="fn">cambiarPassword</span>(String nueva) {
+        <span class="cm">// ❌ los invitados no tienen cuenta — rompe el contrato</span>
+        <span class="kw">throw new</span> UnsupportedOperationException(
+            <span class="st">"Los usuarios invitados no pueden cambiar su contraseña"</span>
+        );
+    }
+
+    <span class="an">@Override</span>
+    <span class="kw">public void</span> <span class="fn">cerrarSesion</span>() {
+        <span class="kw">throw new</span> UnsupportedOperationException(
+            <span class="st">"Los usuarios invitados no tienen sesión activa"</span>
+        );
+    }
+}</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-filename">GestorCuenta.java</span>
+          <span class="code-status bad">Explota en runtime</span>
+        </div>
+<pre><span class="kw">public class</span> <span class="cl">GestorCuenta</span> {
+
+    <span class="cm">// espera cualquier Usuario y asume que puede gestionar su cuenta</span>
+    <span class="kw">public static void</span> <span class="fn">actualizarCuenta</span>(<span class="cl">Usuario</span> u, String nuevaPassword) {
+        u.<span class="fn">cambiarPassword</span>(nuevaPassword); <span class="cm">// 💥 si u es UsuarioInvitado</span>
+        u.<span class="fn">cerrarSesion</span>();                  <span class="cm">// 💥 también falla</span>
+    }
+
+    <span class="kw">public static void</span> <span class="fn">main</span>(String[] args) {
+        <span class="cl">Usuario</span> david    = <span class="kw">new</span> <span class="cl">UsuarioRegistrado</span>(<span class="st">"David"</span>, <span class="st">"david@mail.com"</span>, <span class="st">"1234"</span>);
+        <span class="cl">Usuario</span> invitado = <span class="kw">new</span> <span class="cl">UsuarioInvitado</span>();
+
+        <span class="fn">actualizarCuenta</span>(david,    <span class="st">"nueva123"</span>); <span class="cm">// ✅ funciona</span>
+        <span class="fn">actualizarCuenta</span>(invitado, <span class="st">"nueva123"</span>); <span class="cm">// ❌ UnsupportedOperationException</span>
+    }
+}</pre>
+      </div>
+
+      <div class="verdict">
+        <div class="verdict-card bad">
+          <p class="verdict-label">El problema</p>
+          <p>
+            <ic>GestorCuenta</ic> confía en que todo <ic>Usuario</ic> puede gestionar su cuenta.
+            <ic>UsuarioInvitado</ic> hereda esa promesa pero no puede cumplirla — el error aparece solo en runtime.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- fix -->
+    <section class="panel">
+      <h2 class="panel-title">✅ Solución — Interfaz CuentaEditable</h2>
+      <p>
+        <ic>Usuario</ic> solo define lo que todos comparten: <ic>login()</ic>.
+        Los métodos de gestión de cuenta se mueven a la interfaz <ic>CuentaEditable</ic>,
+        que solo implementa <ic>UsuarioRegistrado</ic>.
+        <ic>GestorCuenta</ic> ahora exige <ic>CuentaEditable</ic> — el compilador bloquea que un invitado entre donde no debe.
+      </p>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-filename">Usuario.java</span>
+        </div>
+<pre><span class="kw">public class</span> <span class="cl">Usuario</span> {
+    <span class="kw">protected</span> String nombre;
+    <span class="kw">protected</span> String email;
+
+    <span class="kw">public</span> <span class="cl">Usuario</span>(String nombre, String email) {
+        <span class="kw">this</span>.nombre = nombre;
+        <span class="kw">this</span>.email  = email;
+    }
+
+    <span class="cm">// solo lo que todos los usuarios comparten</span>
+    <span class="kw">public void</span> <span class="fn">login</span>() {
+        System.out.println(nombre + <span class="st">" ha iniciado sesión"</span>);
+    }
+}</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-filename">CuentaEditable.java</span>
+        </div>
+<pre><span class="kw">public interface</span> <span class="cl">CuentaEditable</span> {
+    <span class="kw">void</span> <span class="fn">cambiarPassword</span>(String nueva);
+    <span class="kw">void</span> <span class="fn">cerrarSesion</span>();
+}</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-filename">UsuarioRegistrado.java</span>
+        </div>
+<pre><span class="kw">public class</span> <span class="cl">UsuarioRegistrado</span> <span class="kw">extends</span> <span class="cl">Usuario</span> <span class="kw">implements</span> <span class="cl">CuentaEditable</span> {
+    <span class="kw">private</span> String password;
+
+    <span class="kw">public</span> <span class="cl">UsuarioRegistrado</span>(String nombre, String email, String password) {
+        <span class="kw">super</span>(nombre, email);
+        <span class="kw">this</span>.password = password;
+    }
+
+    <span class="an">@Override</span>
+    <span class="kw">public void</span> <span class="fn">cambiarPassword</span>(String nueva) {
+        <span class="kw">this</span>.password = nueva;
+        System.out.println(<span class="st">"Contraseña actualizada para "</span> + nombre);
+    }
+
+    <span class="an">@Override</span>
+    <span class="kw">public void</span> <span class="fn">cerrarSesion</span>() {
+        System.out.println(nombre + <span class="st">" ha cerrado sesión"</span>);
+    }
+}</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-filename">UsuarioInvitado.java</span>
+        </div>
+<pre><span class="kw">public class</span> <span class="cl">UsuarioInvitado</span> <span class="kw">extends</span> <span class="cl">Usuario</span> {
+    <span class="cm">// no implementa CuentaEditable — no promete lo que no puede cumplir ✅</span>
+    <span class="kw">public</span> <span class="cl">UsuarioInvitado</span>() {
+        <span class="kw">super</span>(<span class="st">"Invitado"</span>, <span class="st">""</span>);
+    }
+}</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-header">
+          <div class="code-dots"><span></span><span></span><span></span></div>
+          <span class="code-filename">GestorCuenta.java</span>
+          <span class="code-status good">Correcto</span>
+        </div>
+<pre><span class="kw">public class</span> <span class="cl">GestorCuenta</span> {
+
+    <span class="cm">// ahora exige CuentaEditable — invitados no pueden entrar aquí</span>
+    <span class="kw">public static void</span> <span class="fn">actualizarCuenta</span>(<span class="cl">CuentaEditable</span> u, String nuevaPassword) {
+        u.<span class="fn">cambiarPassword</span>(nuevaPassword);
+        u.<span class="fn">cerrarSesion</span>();
+    }
+
+    <span class="kw">public static void</span> <span class="fn">main</span>(String[] args) {
+        <span class="cl">UsuarioRegistrado</span> david    = <span class="kw">new</span> <span class="cl">UsuarioRegistrado</span>(<span class="st">"David"</span>, <span class="st">"david@mail.com"</span>, <span class="st">"1234"</span>);
+        <span class="cl">UsuarioInvitado</span>   invitado = <span class="kw">new</span> <span class="cl">UsuarioInvitado</span>();
+
+        invitado.<span class="fn">login</span>();  <span class="cm">// ✅ los invitados sí pueden hacer login</span>
+        david.<span class="fn">login</span>();     <span class="cm">// ✅</span>
+
+        <span class="fn">actualizarCuenta</span>(david,    <span class="st">"nueva123"</span>); <span class="cm">// ✅ funciona</span>
+        <span class="fn">actualizarCuenta</span>(invitado, <span class="st">"nueva123"</span>); <span class="cm">// ❌ error de compilación</span>
+    }
+}</pre>
+      </div>
+
+      <div class="verdict">
+        <div class="verdict-card good">
+          <p class="verdict-label">La solución</p>
+          <p>
+            El compilador bloquea que un <ic>UsuarioInvitado</ic> entre a <ic>GestorCuenta</ic>.
+            Ambos tipos siguen siendo <ic>Usuario</ic> y pueden hacer <ic>login()</ic>,
+            pero solo el registrado promete gestionar su cuenta.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <section class="panel">
+      <h2 class="panel-title">📁 Estructura de archivos</h2>
+      <div class="tree">
+        <span class="dir">src/</span><br>
+        &nbsp;&nbsp;<span class="dir">└── usuarios/</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="iface">├── CuentaEditable.java</span>&nbsp;&nbsp;<span class="note">← interface</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">├── Usuario.java</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">├── UsuarioRegistrado.java</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">└── UsuarioInvitado.java</span><br>
+        &nbsp;&nbsp;<span class="file">└── GestorCuenta.java</span>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>&copy; <span id="year"></span> David Corrales</p>
+    </footer>
+
+  </div>
+</div>
+
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
