@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liskov Substitution Principle — SOLID</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0f1117;
+      --surface:   #181c27;
+      --border:    #252a38;
+      --accent:    #7c6af7;
+      --accent-dim:#3d3580;
+      --bad:       #f4645f;
+      --good:      #4ade80;
+      --text:      #e2e8f0;
+      --muted:     #64748b;
+      --mono:      'JetBrains Mono', monospace;
+      --sans:      'Inter', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.7;
+      padding: 0 1rem;
+    }
+
+    /* ── HEADER ── */
+    header {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 4rem 0 2.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: .75rem;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 600;
+      line-height: 1.2;
+      color: #fff;
+    }
+
+    h1 span {
+      color: var(--accent);
+    }
+
+    .subtitle {
+      margin-top: .9rem;
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 560px;
+    }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 3rem 0 6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    /* ── RULE CARD ── */
+    .rule {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      font-size: .95rem;
+    }
+
+    .rule strong { color: #fff; }
+
+    /* ── SECTION ── */
+    section h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    section p {
+      font-size: .95rem;
+      color: var(--text);
+      margin-bottom: .75rem;
+    }
+
+    /* ── CODE BLOCK ── */
+    .code-block {
+      background: #0b0d14;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .6rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-label {
+      font-family: var(--mono);
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .badge-bad  { color: var(--bad); }
+    .badge-good { color: var(--good); }
+    .badge-file { color: var(--muted); }
+
+    .code-dots { display: flex; gap: .4rem; }
+    .code-dots span {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--border);
+    }
+
+    pre {
+      font-family: var(--mono);
+      font-size: .82rem;
+      line-height: 1.75;
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      color: #cdd6f4;
+    }
+
+    /* token colors */
+    .kw  { color: #cba6f7; } /* keyword */
+    .cl  { color: #89dceb; } /* class name */
+    .fn  { color: #89b4fa; } /* function */
+    .st  { color: #a6e3a1; } /* string */
+    .cm  { color: #45475a; font-style: italic; } /* comment */
+    .an  { color: #f38ba8; } /* annotation */
+
+    /* ── VERDICT ── */
+    .verdict {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .verdict-card {
+      flex: 1 1 260px;
+      border-radius: 8px;
+      padding: 1.1rem 1.25rem;
+      border: 1px solid;
+    }
+
+    .verdict-card.bad  { border-color: var(--bad);  background: #1e1214; }
+    .verdict-card.good { border-color: var(--good); background: #0f1e14; }
+
+    .verdict-card .tag {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-bottom: .5rem;
+    }
+
+    .verdict-card.bad  .tag { color: var(--bad); }
+    .verdict-card.good .tag { color: var(--good); }
+
+    .verdict-card p {
+      font-size: .88rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── FILE TREE ── */
+    .tree {
+      background: #0b0d14;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      font-family: var(--mono);
+      font-size: .82rem;
+      line-height: 2;
+      color: #cdd6f4;
+    }
+
+    .tree .dir  { color: var(--accent); }
+    .tree .file { color: var(--muted); }
+    .tree .iface { color: #89dceb; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">SOLID — Principle L</p>
+  <h1>Liskov <span>Substitution</span> Principle</h1>
+  <p class="subtitle">
+    A subclass must be usable wherever its parent class is expected — without breaking the program or producing surprises.
+  </p>
+</header>
+
+<main>
+
+  <!-- RULE -->
+  <div class="rule">
+    <strong>The rule:</strong> if <code>B</code> extends <code>A</code>, you should be able to pass a <code>B</code> anywhere an <code>A</code> is expected and everything should still work correctly.
+  </div>
+
+  <!-- VIOLATION -->
+  <section>
+    <h2>❌ Violation — Ave &amp; Pinguino</h2>
+    <p>
+      A <code>Pinguino</code> extends <code>Ave</code>, but overrides <code>volar()</code> with a crash.
+      Any method that receives an <code>Ave</code> and calls <code>volar()</code> will explode at runtime when handed a <code>Pinguino</code>.
+    </p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-dots"><span></span><span></span><span></span></span>
+        <span class="code-label badge-bad">❌ Violates LSP</span>
+      </div>
+<pre><span class="kw">class</span> <span class="cl">Ave</span> {
+    <span class="kw">public void</span> <span class="fn">volar</span>() {
+        System.out.println(<span class="st">"Estoy volando"</span>);
+    }
+}
+
+<span class="kw">class</span> <span class="cl">Pinguino</span> <span class="kw">extends</span> <span class="cl">Ave</span> {
+    <span class="an">@Override</span>
+    <span class="kw">public void</span> <span class="fn">volar</span>() {
+        <span class="cm">// ❌ runtime crash — narrows the contract</span>
+        <span class="kw">throw new</span> RuntimeException(<span class="st">"¡Los pingüinos no vuelan!"</span>);
+    }
+}
+
+<span class="kw">static void</span> <span class="fn">hacerVolar</span>(<span class="cl">Ave</span> ave) {
+    ave.<span class="fn">volar</span>(); <span class="cm">// 💥 explodes when ave is a Pinguino</span>
+}
+
+<span class="cm">// Main</span>
+<span class="fn">hacerVolar</span>(<span class="kw">new</span> <span class="cl">Ave</span>());      <span class="cm">// ✅ "Estoy volando"</span>
+<span class="fn">hacerVolar</span>(<span class="kw">new</span> <span class="cl">Pinguino</span>()); <span class="cm">// ❌ RuntimeException</span></pre>
+    </div>
+
+    <div class="verdict" style="margin-top:1rem;">
+      <div class="verdict-card bad">
+        <p class="tag">The problem</p>
+        <p>The crash is a <strong>runtime surprise</strong> — the compiler won't warn you. Any code trusting <code>Ave</code> is silently broken when a <code>Pinguino</code> slips in.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- FIX -->
+  <section>
+    <h2>✅ Fix — Redesign the hierarchy</h2>
+    <p>
+      Move only shared behavior into <code>Ave</code>. Extract <code>volar()</code> into a <code>Volador</code> interface
+      so only birds that actually fly implement it. <code>Pinguino</code> makes no promise it can't keep.
+    </p>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-dots"><span></span><span></span><span></span></span>
+        <span class="code-label badge-file">Ave.java</span>
+      </div>
+<pre><span class="kw">package</span> animals;
+
+<span class="kw">public class</span> <span class="cl">Ave</span> {
+    <span class="kw">public void</span> <span class="fn">comer</span>() {
+        System.out.println(<span class="st">"Estoy comiendo"</span>);
+    }
+}</pre>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-dots"><span></span><span></span><span></span></span>
+        <span class="code-label badge-file">Volador.java</span>
+      </div>
+<pre><span class="kw">package</span> animals;
+
+<span class="kw">public interface</span> <span class="cl">Volador</span> {
+    <span class="kw">void</span> <span class="fn">volar</span>();
+}</pre>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-dots"><span></span><span></span><span></span></span>
+        <span class="code-label badge-file">Aguila.java</span>
+      </div>
+<pre><span class="kw">package</span> animals;
+
+<span class="kw">public class</span> <span class="cl">Aguila</span> <span class="kw">extends</span> <span class="cl">Ave</span> <span class="kw">implements</span> <span class="cl">Volador</span> {
+    <span class="kw">public void</span> <span class="fn">volar</span>() {
+        System.out.println(<span class="st">"Estoy volando"</span>);
+    }
+}</pre>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-dots"><span></span><span></span><span></span></span>
+        <span class="code-label badge-file">Pinguino.java</span>
+      </div>
+<pre><span class="kw">package</span> animals;
+
+<span class="kw">public class</span> <span class="cl">Pinguino</span> <span class="kw">extends</span> <span class="cl">Ave</span> {
+    <span class="cm">// no implements Volador — makes no promise it can't keep ✅</span>
+}</pre>
+    </div>
+
+    <div class="code-block">
+      <div class="code-header">
+        <span class="code-dots"><span></span><span></span><span></span></span>
+        <span class="code-label badge-good">✅ Main.java</span>
+      </div>
+<pre><span class="kw">import</span> animals.*;
+
+<span class="kw">public class</span> <span class="cl">Main</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(String[] args) {
+        <span class="cl">Aguila</span>  aguila   = <span class="kw">new</span> <span class="cl">Aguila</span>();
+        <span class="cl">Pinguino</span> pinguino = <span class="kw">new</span> <span class="cl">Pinguino</span>();
+
+        aguila.<span class="fn">comer</span>();    <span class="cm">// "Estoy comiendo"</span>
+        pinguino.<span class="fn">comer</span>(); <span class="cm">// "Estoy comiendo"</span>
+
+        <span class="fn">hacerVolar</span>(aguila);    <span class="cm">// ✅ "Estoy volando"</span>
+        <span class="cm">// hacerVolar(pinguino) → ❌ compiler error, caught before runtime</span>
+    }
+
+    <span class="kw">static void</span> <span class="fn">hacerVolar</span>(<span class="cl">Volador</span> animal) {
+        animal.<span class="fn">volar</span>();
+    }
+}</pre>
+    </div>
+
+    <div class="verdict" style="margin-top:1rem;">
+      <div class="verdict-card good">
+        <p class="tag">The fix</p>
+        <p>The error is now a <strong>compile-time error</strong> — caught before the program runs. No surprises, no broken contracts.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- FILE STRUCTURE -->
+  <section>
+    <h2>📁 File structure</h2>
+    <div class="tree">
+      <span class="dir">src/</span><br>
+      &nbsp;&nbsp;<span class="dir">└── animals/</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="iface">├── Volador.java</span>&nbsp;&nbsp;&nbsp;<span style="color:#45475a;font-style:italic;">← interface</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">├── Ave.java</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">├── Aguila.java</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="file">└── Pinguino.java</span><br>
+      &nbsp;&nbsp;<span class="file">└── Main.java</span>
+    </div>
+  </section>
+
+</main>
+
+</body>
+</html>
