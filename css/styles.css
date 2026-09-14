@@ -360,6 +360,10 @@ a {
   min-width: 0;
 }
 
+.project-card + .project-card {
+  margin-top: 1.5rem;
+}
+
 .project-title {
   font-size: 1.2rem;
 }
