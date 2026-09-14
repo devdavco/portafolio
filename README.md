@@ -1,6 +1,6 @@
-# Portafolio — David Corrales
+# Portafolio - David Corrales
 
-Landing "Próximamente" hecha con HTML, CSS y JavaScript puro. Sin frameworks ni build.
+Portafolio de una sola página hecho con HTML, CSS y JavaScript puro. Sin frameworks ni build.
 
 ## Estructura por capas
 
@@ -9,8 +9,10 @@ Landing "Próximamente" hecha con HTML, CSS y JavaScript puro. Sin frameworks ni
 ├── index.html        # Estructura y contenido
 ├── css/
 │   └── styles.css     # Presentación (tokens de tema al inicio)
-└── js/
-    └── main.js        # Comportamiento (año dinámico del footer)
+├── js/
+│   └── main.js        # Comportamiento (año del footer, reveal-on-scroll)
+└── img/
+    └── juan.jpg        # Foto de perfil usada en el hero
 ```
 
 ## Cómo editar
