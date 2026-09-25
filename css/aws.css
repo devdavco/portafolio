@@ -1,0 +1,567 @@
+/* ===================================================
+   Presentación /aws
+   Depende de css/styles.css (tokens, reset, tipografía,
+   .site-header, .nav, .btn-primary, .link-secondary,
+   .stack-grid, .timeline, .project-tags).
+   =================================================== */
+
+/* ===================================================
+   Shell de la página
+   =================================================== */
+.deck-page {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.deck-main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Con JS activo, el área de diapositivas ocupa la pantalla
+   y el contenido queda centrado verticalmente. */
+.is-deck .deck-main {
+  justify-content: center;
+}
+
+.deck {
+  width: 100%;
+}
+
+/* ===================================================
+   Diapositivas
+   =================================================== */
+.slide {
+  width: 100%;
+  max-width: 1080px;
+  margin-inline: auto;
+  padding: clamp(2rem, 5vw, 3.5rem) var(--page-padding);
+}
+
+/* Sin JS las diapositivas se apilan como un documento normal:
+   una línea las separa. En modo deck sobra. */
+.slide + .slide {
+  border-top: 1px solid var(--border);
+}
+
+.is-deck .slide + .slide {
+  border-top: none;
+}
+
+.slide-title {
+  font-size: clamp(1.75rem, 4vw, 2.6rem);
+  letter-spacing: -0.01em;
+  margin-bottom: 1.5rem;
+}
+
+.slide-lead {
+  color: var(--text-secondary);
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+  max-width: 62ch;
+}
+
+.slide-lead + .slide-lead {
+  margin-top: 1rem;
+}
+
+.slide-note {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  border-left: 2px solid var(--accent);
+  padding-left: 0.9rem;
+  max-width: 70ch;
+  margin-top: 1.75rem;
+}
+
+.slide-highlight {
+  color: var(--accent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .is-deck .slide.is-entering {
+    animation: slide-enter 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+@keyframes slide-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ===================================================
+   1. Portada
+   =================================================== */
+.slide-cover {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.cover-title {
+  font-size: clamp(2.25rem, 6vw, 4rem);
+  letter-spacing: -0.02em;
+  max-width: 18ch;
+}
+
+.cover-rule {
+  width: 72px;
+  height: 2px;
+  background: var(--accent);
+}
+
+.cover-meta {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cover-meta strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ===================================================
+   2. Problema / 10. Cierre (declaración)
+   =================================================== */
+.statement {
+  font-size: clamp(1.5rem, 3.6vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  max-width: 24ch;
+  text-wrap: balance;
+}
+
+.statement-support {
+  color: var(--text-secondary);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  max-width: 58ch;
+  margin-top: 1.5rem;
+}
+
+/* ===================================================
+   3. Cifras clave
+   =================================================== */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  margin-top: 2.25rem;
+}
+
+.stat {
+  background: var(--bg);
+  padding: 1.5rem;
+}
+
+.stat-value {
+  font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.stat-label {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
+/* ===================================================
+   4. Diagrama de arquitectura
+   =================================================== */
+.diagram-figure {
+  margin: 0;
+}
+
+.diagram-scroll {
+  overflow-x: auto;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  padding: 1rem;
+}
+
+.diagram-scroll svg {
+  display: block;
+  min-width: 720px;
+  width: 100%;
+  max-width: 880px;
+  height: auto;
+  margin-inline: auto;
+}
+
+.diagram-node {
+  fill: var(--bg);
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.diagram-node-accent {
+  fill: var(--bg);
+  stroke: var(--accent);
+  stroke-width: 1;
+}
+
+.diagram-boundary {
+  fill: none;
+  stroke: var(--text-muted);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+
+.diagram-flow {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  fill: none;
+}
+
+.diagram-flow-dashed {
+  stroke: var(--text-secondary);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 4;
+  fill: none;
+}
+
+.diagram-label {
+  fill: var(--text);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.diagram-sublabel {
+  fill: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.diagram-edge-label {
+  fill: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+}
+
+.diagram-boundary-label {
+  fill: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.diagram-figure figcaption {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  max-width: 70ch;
+}
+
+/* ===================================================
+   5. Por qué cada servicio (reusa .stack-grid)
+   =================================================== */
+.service-grid {
+  margin-top: 0.5rem;
+}
+
+.service-grid .stack-block h3 {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.service-grid .stack-block p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.service-tag {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+  margin-bottom: 0.7rem;
+  letter-spacing: 0.06em;
+}
+
+/* ===================================================
+   6. Costos
+   =================================================== */
+.table-scroll {
+  overflow-x: auto;
+}
+
+.cost-table {
+  width: 100%;
+  min-width: 460px;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.cost-table caption {
+  text-align: left;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 1.1rem;
+  max-width: 70ch;
+}
+
+.cost-table th,
+.cost-table td {
+  text-align: left;
+  padding: 0.8rem 0.75rem 0.8rem 0;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.cost-table thead th {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+}
+
+.cost-table tbody th {
+  font-weight: 500;
+}
+
+.cost-table .num {
+  text-align: right;
+  font-family: var(--font-mono);
+  white-space: nowrap;
+  padding-right: 0;
+}
+
+.cost-free {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  display: block;
+  margin-top: 0.3rem;
+}
+
+.cost-table tfoot th,
+.cost-table tfoot td {
+  border-bottom: none;
+  border-top: 1px solid var(--accent);
+  font-weight: 700;
+  color: var(--text);
+  padding-top: 0.9rem;
+}
+
+/* ===================================================
+   8. Riesgos y mitigación
+   =================================================== */
+.risk-list {
+  margin-top: 0.5rem;
+}
+
+.risk-item {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 1.5rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.risk-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.risk-item:first-child {
+  padding-top: 0;
+}
+
+.risk-item dt {
+  font-weight: 700;
+}
+
+.risk-item dd {
+  margin: 0;
+  color: var(--text-secondary);
+  border-left: 2px solid var(--accent);
+  padding-left: 1rem;
+}
+
+/* ===================================================
+   9. Valor
+   =================================================== */
+.value-tags {
+  margin-top: 1.75rem;
+}
+
+/* ===================================================
+   Controles del deck
+   =================================================== */
+.deck-controls {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid var(--border);
+}
+
+.deck-progress {
+  height: 2px;
+  background: var(--border);
+}
+
+.deck-progress-fill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deck-progress-fill {
+    transition: none;
+  }
+}
+
+.deck-controls-inner {
+  max-width: 1080px;
+  margin-inline: auto;
+  padding: 0 var(--page-padding);
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.deck-btn {
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 0.55rem 1.1rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--transition), border-color var(--transition),
+    transform var(--transition);
+}
+
+.deck-btn:hover:not(:disabled) {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.deck-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.deck-btn:disabled {
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.deck-counter {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.deck-counter strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.deck-fs {
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color var(--transition);
+}
+
+.deck-fs:hover {
+  color: var(--text);
+}
+
+/* ===================================================
+   Utilidades
+   =================================================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ===================================================
+   Responsive
+   =================================================== */
+@media (max-width: 720px) {
+  .stat-row {
+    grid-template-columns: 1fr;
+  }
+
+  .stat {
+    padding: 1.1rem 0;
+  }
+
+  .risk-item {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .deck-fs {
+    display: none;
+  }
+
+  .deck-btn {
+    padding: 0.55rem 0.9rem;
+  }
+}
+
+/* ===================================================
+   Impresión: todas las diapositivas, una por página
+   =================================================== */
+@media print {
+  .site-header,
+  .deck-controls {
+    display: none;
+  }
+
+  .slide[hidden] {
+    display: block !important;
+  }
+
+  .slide {
+    break-after: page;
+    border-top: none;
+  }
+}
