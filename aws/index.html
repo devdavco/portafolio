@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>App de citas serverless en AWS | David Corrales</title>
+  <meta
+    name="description"
+    content="Pitch del proyecto de grado de David Corrales: una app de citas serverless en AWS con Lambda, DynamoDB, S3 y API Gateway, operando por menos de US$3 al mes."
+  />
+  <meta name="theme-color" content="#14161a" />
+  <link rel="canonical" href="https://davidcorrales.dev/aws" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="es_CO" />
+  <meta property="og:site_name" content="David Corrales" />
+  <meta property="og:title" content="App de citas serverless en AWS" />
+  <meta
+    property="og:description"
+    content="Proyecto de grado: arquitectura serverless en AWS que escala sola y cuesta menos de US$3 al mes. Presentación en diez diapositivas."
+  />
+  <meta property="og:url" content="https://davidcorrales.dev/aws" />
+  <meta property="og:image" content="https://davidcorrales.dev/img/og-aws.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta
+    property="og:image:alt"
+    content="App de citas serverless en AWS, proyecto de grado de David Corrales."
+  />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="App de citas serverless en AWS" />
+  <meta
+    name="twitter:description"
+    content="Proyecto de grado: arquitectura serverless en AWS que escala sola y cuesta menos de US$3 al mes."
+  />
+  <meta name="twitter:image" content="https://davidcorrales.dev/img/og-aws.png" />
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link rel="stylesheet" href="/css/aws.css" />
+</head>
+<body class="deck-page">
+  <header class="site-header">
+    <nav class="nav" aria-label="Principal">
+      <a class="nav-brand" href="/">David Corrales</a>
+      <div class="nav-links">
+        <button class="deck-fs" id="deck-fullscreen" type="button" aria-pressed="false" hidden>
+          Pantalla completa
+        </button>
+        <a href="/">Volver al portafolio</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="deck-main">
+    <div
+      class="deck"
+      id="deck"
+      role="group"
+      aria-roledescription="carrusel"
+      aria-label="Pitch del proyecto de grado, 10 diapositivas"
+    >
+      <!-- ===================== 1. Portada ===================== -->
+      <section
+        class="slide slide-cover"
+        id="slide-1"
+        role="group"
+        aria-roledescription="diapositiva"
+        aria-label="1 de 10: Portada"
+      >
+        <h1 class="cover-title">App de citas serverless en AWS</h1>
+        <div class="cover-rule"></div>
+        <p class="cover-meta">
+          <strong>Proyecto de grado</strong>
+          <span>David Corrales, Ingeniería Multimedia</span>
+          <span>Universidad de San Buenaventura Cali</span>
+        </p>
+      </section>
+
+      <!-- ===================== 2. El problema ===================== -->
+      <section
+        class="slide"
+        id="slide-2"
+        role="group"
+        aria-roledescription="diapositiva"
+        aria-label="2 de 10: El problema"
+        aria-labelledby="slide-2-heading"
+      >
+        <h2 class="slide-title" id="slide-2-heading">El problema</h2>
+        <p class="statement">
+          Una app de citas necesita infraestructura que escale. Escalar cuesta.
+        </p>
+        <p class="statement-support">
+          Un servidor encendido se paga esté o no en uso, y el tráfico de una app social es
+          irregular: picos en la noche, silencio de madrugada. Aquí no hay inversionista ni
+          presupuesto de facultad. El proyecto lo financia el estudiante con dinero propio, así
+          que la factura mensual es una restricción de diseño, no un detalle administrativo.
+        </p>
+      </section>
+
+      <!-- ===================== 3. La propuesta ===================== -->
+      <section
+        class="slide"
+        id="slide-3"
+        role="group"
+        aria-roledescription="diapositiva"
+        aria-label="3 de 10: La propuesta"
+        aria-labelledby="slide-3-heading"
+      >
+        <h2 class="slide-title" id="slide-3-heading">La propuesta</h2>
+        <p class="slide-lead">
+          Arquitectura serverless en AWS: ningún servidor que administrar, escala sola con la
+          demanda y solo se paga lo que realmente se ejecuta.
+        </p>
+        <div class="stat-row">
+          <div class="stat">
+            <p class="stat-value">0</p>
+            <p class="stat-label">servidores que administrar</p>
+          </div>
+          <div class="stat">
+            <p class="stat-value">US$0</p>
+            <p class="stat-label">cuando nadie está usando la app</p>
+          </div>
+          <div class="stat">
+            <p class="stat-value">&lt; US$3</p>
+            <p class="stat-label">techo de costo mensual, unos $12.000 COP</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== 4. Arquitectura ===================== -->
+      <section
+        class="slide"
+        id="slide-4"
+        role="group"
+        aria-roledescription="diapositiva"
+        aria-label="4 de 10: Arquitectura"
+        aria-labelledby="slide-4-heading"
+      >
+        <h2 class="slide-title" id="slide-4-heading">Arquitectura</h2>
+        <figure class="diagram-figure">
+          <div
+            class="diagram-scroll"
+            role="group"
+            tabindex="0"
+            aria-label="Diagrama de arquitectura, desplazable en horizontal"
+          >
+            <svg
+              viewBox="0 0 900 440"
+              role="img"
+              aria-labelledby="diagram-title diagram-desc"
+            >
+              <title id="diagram-title">Arquitectura serverless de la app de citas en AWS</title>
+              <desc id="diagram-desc">
+                El navegador carga el frontend desplegado en Vercel y llama a API Gateway en su
+                modalidad HTTP API. API Gateway invoca una función AWS Lambda escrita en Java con
+                Spring Boot. Esa función lee y escribe en DynamoDB, que guarda perfiles, likes,
+                matches y mensajes, y firma URLs prefirmadas para que el navegador suba las fotos
+                directamente a Amazon S3 sin pasar por la función. API Gateway, Lambda, DynamoDB y
+                S3 viven dentro de la misma cuenta de AWS.
+              </desc>
+
+              <defs>
+                <marker
+                  id="diagram-arrow"
+                  markerUnits="userSpaceOnUse"
+                  markerWidth="10"
+                  markerHeight="8"
+                  refX="10"
+                  refY="4"
+                  orient="auto"
+                >
+                  <path d="M0,0 L10,4 L0,8 z" fill="var(--accent)" />
+                </marker>
+                <marker
+                  id="diagram-arrow-muted"
+                  markerUnits="userSpaceOnUse"
+                  markerWidth="10"
+                  markerHeight="8"
+                  refX="10"
+                  refY="4"
+                  orient="auto"
+                >
+                  <path d="M0,0 L10,4 L0,8 z" fill="var(--text-secondary)" />
+                </marker>
+              </defs>
+
+              <!-- Límite de la cuenta AWS -->
+              <text class="diagram-boundary-label" x="250" y="22">CUENTA AWS</text>
+              <rect class="diagram-boundary" x="250" y="30" width="630" height="338" />
+
+              <!-- Nodos -->
+              <rect class="diagram-node" x="16" y="172" width="180" height="84" />
+              <text class="diagram-label" x="106" y="206" text-anchor="middle">Navegador</text>
+              <text class="diagram-sublabel" x="106" y="228" text-anchor="middle">
+                frontend en Vercel
+              </text>
+
+              <rect class="diagram-node" x="280" y="172" width="170" height="84" />
+              <text class="diagram-label" x="365" y="206" text-anchor="middle">API Gateway</text>
+              <text class="diagram-sublabel" x="365" y="228" text-anchor="middle">HTTP API</text>
+
+              <rect class="diagram-node-accent" x="490" y="172" width="180" height="84" />
+              <text class="diagram-label" x="580" y="206" text-anchor="middle">AWS Lambda</text>
+              <text class="diagram-sublabel" x="580" y="228" text-anchor="middle">
+                Java / Spring Boot
+              </text>
+
+              <rect class="diagram-node" x="700" y="62" width="160" height="84" />
+              <text class="diagram-label" x="780" y="92" text-anchor="middle">DynamoDB</text>
+              <text class="diagram-sublabel" x="780" y="112" text-anchor="middle">
+                perfiles, likes,
+              </text>
+              <text class="diagram-sublabel" x="780" y="128" text-anchor="middle">
+                matches, mensajes
+              </text>
+
+              <rect class="diagram-node" x="700" y="262" width="160" height="84" />
+              <text class="diagram-label" x="780" y="296" text-anchor="middle">Amazon S3</text>
+              <text class="diagram-sublabel" x="780" y="318" text-anchor="middle">
+                fotos de perfil
+              </text>
+
+              <!-- Flujo principal -->
+              <path class="diagram-flow" d="M196,214 H274" marker-end="url(#diagram-arrow)" />
+              <text class="diagram-edge-label" x="235" y="204" text-anchor="middle">HTTPS</text>
+
+              <path class="diagram-flow" d="M450,214 H484" marker-end="url(#diagram-arrow)" />
+              <path
+                class="diagram-flow"
+                d="M670,196 H685 V104 H694"
+                marker-end="url(#diagram-arrow)"
+              />
+              <path
+                class="diagram-flow"
+                d="M670,232 H685 V304 H694"
+                marker-end="url(#diagram-arrow)"
+              />
+
+              <!-- Subida directa de fotos -->
+              <path
+                class="diagram-flow-dashed"
+                d="M106,256 V400 H780 V350"
+                marker-end="url(#diagram-arrow-muted)"
+              />
+              <text class="diagram-edge-label" x="440" y="392" text-anchor="middle">
+                subida directa con URL prefirmada
+              </text>
+            </svg>
+          </div>
+          <figcaption>
+            El navegador consume el frontend desplegado en Vercel. Las peticiones van a API Gateway,
+            que invoca una función Lambda con Spring Boot. Lambda lee y escribe en DynamoDB y firma
+            URLs para que las fotos suban directamente a S3, sin pasar por la función.
+          </figcaption>
+        </figure>
+      </section>
+
+      <!-- ===================== 5. Por qué cada servicio ===================== -->
+      <section
+        class="slide"
+        id="slide-5"
+        role="group"
+        aria-roledescription="diapositiva"
+        aria-label="5 de 10: Por qué cada servicio"
+        aria-labelledby="slide-5-heading"
+      >
+        <h2 class="slide-title" id="slide-5-heading">Por qué cada servicio</h2>
+        <div class="stack-grid service-grid">
+          <div class="stack-block">
+            <span class="service-tag">Base de datos</span>
+            <h3>DynamoDB</h3>
+            <p>
+              NoSQL administrado que escala automáticamente. Su capa gratuita en modo aprovisionado,
+              25 unidades de lectura y escritura con 25 GB, no vence nunca.
+            </p>
+          </div>
+          <div class="stack-block">
+            <span class="service-tag">Almacenamiento</span>
+            <h3>Amazon S3</h3>
+            <p>
+              Saca las fotos de la base de datos: barato por GB, duradero y con el bucket privado,
+              sin acceso público.
+            </p>
+          </div>
+          <div class="stack-block">
+            <span class="service-tag">Cómputo</span>
+            <h3>AWS Lambda</h3>
+            <p>
+              Se paga por ejecución, no por tiempo encendido. El primer millón de solicitudes al mes
+              es gratis de forma permanente.
+            </p>
+          </div>
+          <div class="stack-block">
+            <span class="service-tag">Entrada</span>
+            <h3>API Gateway</h3>
+            <p>
+              Expone la API por HTTPS con control de acceso y por centavos: US$1 por cada millón de
+              solicitudes.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== 6. Costos ===================== -->
+      <section
+        class="slide"
+        id="slide-6"
+        role="group"
+        aria-roledescription="diapositiva"
+        aria-label="6 de 10: Costos"
+        aria-labelledby="slide-6-heading"
+      >
+        <h2 class="slide-title" id="slide-6-heading">Costos</h2>
+        <div class="table-scroll">
+          <table class="cost-table">
+            <caption>
+              Estimación mensual del piloto: unos 500 usuarios, 50.000 solicitudes y 2 GB de fotos.
+              Conversión de planeación redondeada a $4.000 COP por dólar.
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Servicio</th>
+                <th scope="col" class="num">USD / mes</th>
+                <th scope="col" class="num">COP / mes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">
+                  DynamoDB
+                  <span class="cost-free">capa gratuita permanente</span>
+                </th>
+                <td class="num">US$0,00</td>
+                <td class="num">$0</td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  AWS Lambda
+                  <span class="cost-free">capa gratuita permanente</span>
+                </th>
+                <td class="num">US$0,00</td>
+                <td class="num">$0</td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  API Gateway
+                  <span class="cost-free">US$1 por millón de solicitudes</span>
+                </th>
+                <td class="num">US$0,05</td>
+                <td class="num">$200</td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  Amazon S3
+                  <span class="cost-free">5 GB gratis los primeros 12 meses</span>
+                </th>
+                <td class="num">US$0,10</td>
+                <td class="num">$400</td>
+              </tr>
+              <tr>
+                <th scope="row">
+                  CloudWatch Logs
+                  <span class="cost-free">5 GB de ingesta gratis</span>
+                </th>
+                <td class="num">US$0,00</td>
+                <td class="num">$0</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th scope="row">Total estimado</th>
+                <td class="num">US$0,15</td>
+                <td class="num">$600</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <p class="slide-note">
+          El techo del proyecto es US$3 al mes, unos $12.000 COP, y AWS Budgets envía alertas en
+          US$1, US$3 y US$5. El margen entre el estimado y el techo es deliberado: absorbe picos de
+          tráfico y el vencimiento de la capa gratuita de 12 meses en S3 y API Gateway.
+        </p>
+      </section>
+
+      <!-- ===================== 7. Plan por fases ===================== -->
+      <section
+        class="slide"
+        id="slide-7"
+        role="group"
+        aria-roledescription="diapositiva"
+        aria-label="7 de 10: Plan por fases"
+        aria-labelledby="slide-7-heading"
+      >
+        <h2 class="slide-title" id="slide-7-heading">Plan por fases</h2>
+        <ul class="timeline">
+          <li>
+            <span class="timeline-status">Fase 1</span>
+            <div class="timeline-body">
+              <p class="timeline-title">Registro y perfiles</p>
+              <p class="timeline-detail">
+                Autenticación, creación y edición de perfil sobre DynamoDB.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span class="timeline-status">Fase 2</span>
+            <div class="timeline-body">
+              <p class="timeline-title">Fotos</p>
+              <p class="timeline-detail">
+                Subida directa a S3 con URLs prefirmadas y el bucket privado.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span class="timeline-status">Fase 3</span>
+            <div class="timeline-body">
+              <p class="timeline-title">Likes y matches</p>
+              <p class="timeline-detail">
+                Registro de likes y detección del match cuando el interés es recíproco.
+              </p>
+            </div>
+          </li>
+          <li>
+            <span class="timeline-status">Fase 4</span>
+            <div class="timeline-body">
+              <p class="timeline-title">Chat básico</p>
+              <p class="timeline-detail">
+                Mensajes entre usuarios con match, almacenados en DynamoDB.
+              </p>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ===================== 8. Riesgos y mitigación ===================== -->
+      <section
+        class="slide"
+        id="slide-8"
+        role="group"
+        aria-roledescription="diapositiva"
+        aria-label="8 de 10: Riesgos y mitigación"
+        aria-labelledby="slide-8-heading"
+      >
+        <h2 class="slide-title" id="slide-8-heading">Riesgos y mitigación</h2>
+        <dl class="risk-list">
+          <div class="risk-item">
+            <dt>Sobrecostos</dt>
+            <dd>
+              AWS Budgets con alertas en US$1, US$3 y US$5, y capacidad aprovisionada fija en
+              DynamoDB para que un pico de tráfico no dispare la factura.
+            </dd>
+          </div>
+          <div class="risk-item">
+            <dt>Seguridad</dt>
+            <dd>
+              Roles IAM de mínimo privilegio, MFA en la cuenta y bucket de S3 privado: las fotos
+              solo se sirven mediante URL prefirmada con vencimiento.
+            </dd>
+          </div>
+          <div class="risk-item">
+            <dt>Arranque en frío</dt>
+            <dd>
+              Lambda SnapStart para Java restaura una instantánea de la función ya inicializada y
+              recorta la latencia de la primera invocación.
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- ===================== 9. Valor ===================== -->
+      <section
+        class="slide"
+        id="slide-9"
+        role="group"
+        aria-roledescription="diapositiva"
+        aria-label="9 de 10: Valor académico y profesional"
+        aria-labelledby="slide-9-heading"
+      >
+        <h2 class="slide-title" id="slide-9-heading">Valor académico y profesional</h2>
+        <p class="slide-lead">
+          El entregable no es solo una app: es una arquitectura cloud completa, con las decisiones
+          de costo y de seguridad documentadas y defendibles.
+        </p>
+        <p class="slide-lead">
+          Al terminar queda un producto desplegado y funcionando, y un perfil que coincide con lo
+          que hoy piden las empresas para un backend junior.
+        </p>
+        <ul class="project-tags value-tags">
+          <li>Java</li>
+          <li>Spring Boot</li>
+          <li>AWS Lambda</li>
+          <li>DynamoDB</li>
+          <li>Amazon S3</li>
+          <li>API Gateway</li>
+          <li>IAM</li>
+          <li>Arquitectura serverless</li>
+          <li>Control de costos</li>
+        </ul>
+      </section>
+
+      <!-- ===================== 10. Cierre ===================== -->
+      <section
+        class="slide"
+        id="slide-10"
+        role="group"
+        aria-roledescription="diapositiva"
+        aria-label="10 de 10: Cierre"
+        aria-labelledby="slide-10-heading"
+      >
+        <h2 class="statement" id="slide-10-heading">
+          Un producto real, escalable y seguro, con presupuesto de estudiante.
+        </h2>
+        <p class="statement-support">
+          La arquitectura está definida, los costos acotados y el plan dividido en cuatro fases
+          entregables. Lo que sigue es construir.
+        </p>
+        <p class="slide-lead">
+          <strong class="slide-highlight">
+            Solicito la aprobación de la propuesta para iniciar el desarrollo.
+          </strong>
+        </p>
+        <p class="slide-note">
+          David Corrales, Ingeniería Multimedia.
+          <a class="link-secondary" href="/">davidcorrales.dev</a>
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <div class="deck-controls" id="deck-controls" hidden>
+    <div class="deck-progress">
+      <span class="deck-progress-fill" id="deck-progress-fill"></span>
+    </div>
+    <div class="deck-controls-inner">
+      <button class="deck-btn" id="deck-prev" type="button">Anterior</button>
+      <p class="deck-counter">
+        <strong id="deck-current">1</strong> / 10
+      </p>
+      <button class="deck-btn" id="deck-next" type="button">Siguiente</button>
+    </div>
+  </div>
+
+  <p class="sr-only" id="deck-status" role="status" aria-live="polite"></p>
+
+  <script src="/js/aws.js"></script>
+</body>
+</html>
