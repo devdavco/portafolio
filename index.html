@@ -219,8 +219,8 @@
           <li>React</li>
         </ul>
         <p class="project-note">
-          Demo de prueba: la versión desplegada aún no tiene la base de datos implementada, usa
-          datos de ejemplo.
+          El backend estuvo desplegado en Railway con PostgreSQL. Actualmente estoy migrándolo a
+          otro servidor; mientras tanto, la demo usa datos de ejemplo.
         </p>
         <div class="project-links">
           <a
@@ -238,14 +238,27 @@
         </div>
       </article>
       <article class="project-card">
-        <!-- Pendiente: captura de Simple Translate. Agregar aquí un bloque .project-media
-             igual al del proyecto anterior con img/simple-translate.webp -->
-        <h3 class="project-title">Simple Translate</h3>
+        <a
+          class="project-media"
+          href="https://chromewebstore.google.com/detail/simple-translate/alodemhdoppdhapkadiedlilchaceijm"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Ver Hotkey Translate en Chrome Web Store"
+        >
+          <img
+            src="img/hotkey-translate.webp"
+            alt="Hotkey Translate: texto seleccionado en una página que se traduce con el atajo Ctrl + Shift + 1"
+            width="1400"
+            height="560"
+            loading="lazy"
+          />
+        </a>
+        <h3 class="project-title">Hotkey Translate</h3>
         <p class="project-description">
-          Extensión de navegador (Manifest V3) para traducir texto seleccionado y escuchar su
-          pronunciación sin salir de la página. Abre Google Translate con el texto seleccionado y
-          usa la Web Speech API para el audio. Creada para agilizar la traducción rápida en el día
-          a día.
+          Extensión de Chrome (Manifest V3) para traducir texto seleccionado con un atajo de teclado
+          (Ctrl + Shift + 1) y escuchar su pronunciación sin salir de la página. Abre Google
+          Translate con la selección ya traducida y usa la Web Speech API para el audio. Antes se
+          llamaba Simple Translate.
         </p>
         <ul class="project-tags">
           <li>JavaScript</li>
@@ -264,7 +277,7 @@
           >Ver en Chrome Web Store</a>
           <a
             class="link-secondary"
-            href="https://github.com/devdavco/simple-translate"
+            href="https://github.com/devdavco/hotkey-translate"
             target="_blank"
             rel="noopener noreferrer"
           >Ver código</a>
