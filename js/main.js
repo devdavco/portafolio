@@ -6,6 +6,49 @@ document.addEventListener("DOMContentLoaded", () => {
     yearEl.textContent = String(new Date().getFullYear());
   }
 
+  // Cambio de tema claro / oscuro. El tema inicial lo aplica el script del <head>.
+  const root = document.documentElement;
+  const toggle = document.getElementById("theme-toggle");
+  const themeColor = document.querySelector('meta[name="theme-color"]');
+  const themeColors = { dark: "#14161a", light: "#f7f7f5" };
+
+  const applyTheme = (theme) => {
+    root.setAttribute("data-theme", theme);
+    if (themeColor) {
+      themeColor.setAttribute("content", themeColors[theme]);
+    }
+    if (toggle) {
+      toggle.setAttribute(
+        "aria-label",
+        theme === "dark" ? "Cambiar a tema claro" : "Cambiar a tema oscuro"
+      );
+    }
+  };
+
+  applyTheme(root.getAttribute("data-theme") === "light" ? "light" : "dark");
+
+  if (toggle) {
+    toggle.hidden = false;
+    toggle.addEventListener("click", () => {
+      const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+      applyTheme(next);
+      try {
+        localStorage.setItem("theme", next);
+      } catch (e) {}
+    });
+  }
+
+  // Si el visitante no eligió tema, seguir los cambios del sistema.
+  window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", (event) => {
+    let saved = null;
+    try {
+      saved = localStorage.getItem("theme");
+    } catch (e) {}
+    if (!saved) {
+      applyTheme(event.matches ? "light" : "dark");
+    }
+  });
+
   // Reveal-on-scroll de las secciones (progresivo: sin JS o sin soporte,
   // el contenido queda visible por defecto vía CSS).
   const prefersReducedMotion = window.matchMedia(

@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>David Corrales - Desarrollador backend en formación</title>
+  <title>David Corrales - Desarrollador Full Stack Java Junior</title>
   <meta
     name="description"
-    content="David Corrales, estudiante de Ingeniería Multimedia enfocado en desarrollo backend con Java y Spring Boot. Portafolio, formación y contacto."
+    content="David Corrales, estudiante de Ingeniería Multimedia enfocado en desarrollo full stack con Java, Spring Boot y Angular, con despliegues en AWS y Docker. Portafolio, formación y contacto."
   />
   <meta name="theme-color" content="#14161a" />
 
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://davidcorrales.dev/" />
-  <meta property="og:title" content="David Corrales - Desarrollador backend Java en formación" />
+  <meta property="og:title" content="David Corrales - Desarrollador Full Stack Java Junior" />
   <meta
     property="og:description"
-    content="Estudiante de Ingeniería Multimedia enfocado en backend con Java y Spring Boot. Busco prácticas profesionales para 2027-1."
+    content="Estudiante de Ingeniería Multimedia enfocado en desarrollo full stack con Java, Spring Boot y Angular, con despliegues en AWS y Docker. Abierto a ofertas laborales."
   />
   <meta property="og:image" content="https://davidcorrales.dev/img/Juan_Corrales_Dev_FullStack_Java_SpringBoot_Backend.jpg" />
   <meta name="twitter:card" content="summary" />
@@ -30,6 +30,18 @@
     rel="stylesheet"
   />
 
+  <script>
+    // Aplica el tema guardado (o el del sistema) antes de pintar, para evitar parpadeos.
+    (function () {
+      try {
+        var theme = localStorage.getItem("theme");
+        if (theme !== "light" && theme !== "dark") {
+          theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        }
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) {}
+    })();
+  </script>
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
@@ -43,6 +55,10 @@
         <a href="#proyectos">Proyectos</a>
         <a href="#contacto">Contacto</a>
       </div>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Cambiar a tema claro" hidden>
+        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
     </nav>
   </header>
 
@@ -51,11 +67,12 @@
     <section id="hero" class="hero">
       <div class="hero-inner">
         <div class="hero-copy">
-          <p class="hero-badge"><span class="hero-badge-dot" aria-hidden="true"></span>Disponible para prácticas 2027-1</p>
+          <!-- <p class="hero-badge"><span class="hero-badge-dot" aria-hidden="true"></span>Abierto a ofertas laborales</p> -->
           <h1 class="hero-title">David Corrales</h1>
           <p class="hero-subtitle">
-            Desarrollador backend en formación con Java y Spring Boot. Estudiante de último año
-            de Ingeniería Multimedia, busco mis prácticas profesionales como desarrollador Java.
+            Desarrollador Full Stack Java Junior: Spring Boot en el backend, Angular en el frontend y
+            un primer despliegue en AWS con Docker. Estudiante de último año de Ingeniería
+            Multimedia.
           </p>
           <div class="hero-actions">
             <a class="btn-primary" href="mailto:hola@davidcorrales.dev">Escríbeme</a>
@@ -92,9 +109,15 @@
       <p>
         Vengo del soporte técnico y mantenimiento de hardware: más de seis años trabajando de
         forma independiente en atención a clientes, gestión de ventas y buenas prácticas de
-        seguridad informática. Esa experiencia me llevó a reconvertirme a desarrollador backend:
-        hoy me formo en Java y Spring Boot, con bases en JavaScript, Python, SQL, HTML y CSS, y estoy
-        aprendiendo microservicios y servicios de AWS como RDS Aurora y DynamoDB.
+        seguridad informática. Esa experiencia me llevó a reconvertirme a desarrollador full stack:
+        hoy me formo en Java y Spring Boot para el backend y Angular para el frontend, con bases en
+        JavaScript, Python, SQL, HTML y CSS, y estoy aprendiendo microservicios.
+      </p>
+      <p>
+        En la nube ya tengo un primer despliegue real: subí una aplicación web a AWS. La
+        empaqueté en contenedores Docker, la puse a correr en una instancia EC2 y conecté su base de
+        datos PostgreSQL en Amazon RDS. Ahora me preparo para la certificación AWS Certified Cloud
+        Practitioner y sigo explorando otros servicios como Aurora y DynamoDB.
       </p>
     </section>
 
@@ -103,7 +126,7 @@
       <h2 id="formacion-heading">Formación y trayectoria</h2>
       <ul class="timeline">
         <li>
-          <span class="timeline-status">8º semestre</span>
+          <span class="timeline-status">En curso <span class="timeline-status-sub">8º semestre</span></span>
           <div class="timeline-body">
             <p class="timeline-title">Ingeniería Multimedia</p>
             <p class="timeline-detail">
@@ -119,10 +142,10 @@
           </div>
         </li>
         <li>
-          <span class="timeline-status">Meta 2027-1</span>
+          <span class="timeline-status">En preparación</span>
           <div class="timeline-body">
-            <p class="timeline-title">Prácticas profesionales</p>
-            <p class="timeline-detail">Como desarrollador backend Java</p>
+            <p class="timeline-title">AWS Certified Cloud Practitioner</p>
+            <p class="timeline-detail">Certificación de fundamentos de la nube de AWS</p>
           </div>
         </li>
       </ul>
@@ -135,10 +158,10 @@
         <div class="stack-block stack-block-primary">
           <h3>Backend</h3>
           <ul class="stack-list">
-            <li><img src="img/icons/java.svg" alt="" width="28" height="28" loading="lazy" />Java</li>
             <li><img src="img/icons/springboot.svg" alt="" width="28" height="28" loading="lazy" />Spring Boot</li>
             <li><img src="img/icons/hibernate.svg" alt="" width="28" height="28" loading="lazy" />Hibernate</li>
             <li><img src="img/icons/maven.svg" alt="" width="28" height="28" loading="lazy" />Maven</li>
+            <li class="stack-item-compact"><img src="img/icons/nodejs.svg" alt="" width="28" height="28" loading="lazy" />Node.js <span class="stack-note">(nociones)</span></li>
             <li><img src="img/icons/microservices.svg" alt="" width="28" height="28" loading="lazy" />Microservicios <span class="stack-note">(nociones)</span></li>
           </ul>
         </div>
@@ -147,8 +170,10 @@
           <ul class="stack-list">
             <li><img src="img/icons/postgresql.svg" alt="" width="28" height="28" loading="lazy" />PostgreSQL</li>
             <li><img src="img/icons/database.svg" alt="" width="28" height="28" loading="lazy" />SQL</li>
-            <li><img src="img/icons/database.svg" alt="" width="28" height="28" loading="lazy" />RDS Aurora</li>
-            <li><img src="img/icons/dynamodb.svg" alt="" width="28" height="28" loading="lazy" />DynamoDB</li>
+            <li><img src="img/icons/aws.svg" alt="" width="28" height="28" loading="lazy" />Amazon Aurora <span class="stack-note">(nociones)</span></li>
+            <li><img src="img/icons/database.svg" alt="" width="28" height="28" loading="lazy" />NoSQL <span class="stack-note">(nociones)</span></li>
+            <li><img src="img/icons/dynamodb.svg" alt="" width="28" height="28" loading="lazy" />DynamoDB <span class="stack-note">(nociones)</span></li>
+            <li><img src="img/icons/mongodb.svg" alt="" width="28" height="28" loading="lazy" />MongoDB <span class="stack-note">(nociones)</span></li>
           </ul>
         </div>
         <div class="stack-block">
@@ -156,21 +181,37 @@
           <ul class="stack-list">
             <li><img src="img/icons/html5.svg" alt="" width="28" height="28" loading="lazy" />HTML</li>
             <li><img src="img/icons/css3.svg" alt="" width="28" height="28" loading="lazy" />CSS</li>
-            <li><img src="img/icons/javascript.svg" alt="" width="28" height="28" loading="lazy" />JavaScript</li>
+            <li><img src="img/icons/angular.svg" alt="" width="28" height="28" loading="lazy" />Angular</li>
             <li><img src="img/icons/bootstrap.svg" alt="" width="28" height="28" loading="lazy" />Bootstrap</li>
           </ul>
         </div>
         <div class="stack-block">
-          <h3>Cloud y DevOps</h3>
+          <h3>Lenguajes</h3>
           <ul class="stack-list">
-            <li><img src="img/icons/aws.svg" alt="" width="28" height="28" loading="lazy" />AWS <span class="stack-note">(nociones)</span></li>
-            <li><img src="img/icons/docker.svg" alt="" width="28" height="28" loading="lazy" />Docker</li>
+            <li><img src="img/icons/java.svg" alt="" width="28" height="28" loading="lazy" />Java</li>
+            <li><img src="img/icons/javascript.svg" alt="" width="28" height="28" loading="lazy" />JavaScript</li>
+            <li><img src="img/icons/typescript.svg" alt="" width="28" height="28" loading="lazy" />TypeScript <span class="stack-note">(nociones)</span></li>
+            <li><img src="img/icons/python.svg" alt="" width="28" height="28" loading="lazy" />Python <span class="stack-note">(nociones)</span></li>
           </ul>
         </div>
         <div class="stack-block">
-          <h3>Otros lenguajes</h3>
+          <h3>Testing</h3>
           <ul class="stack-list">
-            <li><img src="img/icons/python.svg" alt="" width="28" height="28" loading="lazy" />Python</li>
+            <li><img src="img/icons/junit.svg" alt="" width="28" height="28" loading="lazy" />JUnit <span class="stack-note">(nociones)</span></li>
+            <li><img src="img/icons/jest.svg" alt="" width="28" height="28" loading="lazy" />Jest <span class="stack-note">(nociones)</span></li>
+            <li><img src="img/icons/playwright.svg" alt="" width="28" height="28" loading="lazy" />Playwright <span class="stack-note">(nociones)</span></li>
+          </ul>
+        </div>
+        <div class="stack-block stack-block-wide">
+          <h3>Cloud y DevOps</h3>
+          <ul class="stack-list">
+            <li><img src="img/icons/aws.svg" alt="" width="28" height="28" loading="lazy" />AWS EC2</li>
+            <li><img src="img/icons/aws.svg" alt="" width="28" height="28" loading="lazy" />Amazon RDS</li>
+            <li><img src="img/icons/docker.svg" alt="" width="28" height="28" loading="lazy" />Docker</li>
+            <li><img src="img/icons/docker.svg" alt="" width="28" height="28" loading="lazy" />Docker Compose</li>
+            <li><img src="img/icons/docker.svg" alt="" width="28" height="28" loading="lazy" />Docker Hub</li>
+            <li><img src="img/icons/nginx.svg" alt="" width="28" height="28" loading="lazy" />nginx</li>
+            <li><img src="img/icons/linux.svg" alt="" width="28" height="28" loading="lazy" />Linux / SSH</li>
           </ul>
         </div>
         <div class="stack-block stack-block-wide">
@@ -192,49 +233,54 @@
       <article class="project-card">
         <a
           class="project-media"
-          href="https://backend-1-seven-murex.vercel.app"
+          href="https://coworking.davidcorrales.dev/"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Abrir la demo del Sistema de Reservas"
+          aria-label="Abrir el Sistema de Reservas desplegado en AWS"
         >
           <img
             src="img/coworking-dashboard.webp"
-            alt="Dashboard del Sistema de Reservas: totales de usuarios, espacios y reservas, reservas recientes y su estado"
+            alt="Vista de cliente del Sistema de Reservas: tarjetas de espacios, formulario de reserva con fecha y horario, y franjas libres del día"
             width="1400"
-            height="559"
+            height="560"
             loading="lazy"
           />
         </a>
-        <h3 class="project-title">Sistema de Reservas de Espacios para Coworking</h3>
+        <h3 class="project-title">Despliegue en AWS de un Sistema de Reservas para Coworking</h3>
         <p class="project-description">
-          API RESTful en Java y Spring Boot para gestionar usuarios, espacios y reservas, con
-          documentación de endpoints en Swagger. Frontend en Next.js y React consumiendo esa API.
+          Puse en producción una aplicación web de reservas para coworking, con API en Spring Boot,
+          frontend en Angular y base de datos PostgreSQL. Configuré los entornos de desarrollo y
+          producción para que las credenciales salgan de variables de entorno y no del código, y dejé
+          un flujo sencillo para publicar nuevas versiones.
         </p>
         <ul class="project-tags">
-          <li>Java</li>
-          <li>Spring Boot</li>
+          <li>Docker</li>
+          <li>Docker Compose</li>
+          <li>AWS EC2</li>
+          <li>Amazon RDS</li>
           <li>PostgreSQL</li>
-          <li>Hibernate</li>
-          <li>Next.js</li>
-          <li>React</li>
+          <li>nginx</li>
         </ul>
         <p class="project-note">
-          El backend estuvo desplegado en Railway con PostgreSQL. Actualmente estoy migrándolo a
-          otro servidor; mientras tanto, la demo usa datos de ejemplo.
+          El backend y el frontend van en contenedores Docker, así funcionan igual en mi equipo que
+          en el servidor. Construyo las imágenes, las subo a Docker Hub y una instancia EC2 (un
+          servidor virtual de AWS) las descarga y las ejecuta. nginx sirve la página y pasa las
+          peticiones a la API. La base de datos está en Amazon RDS, el PostgreSQL administrado de
+          AWS, que se ocupa de los respaldos y el mantenimiento.
         </p>
         <div class="project-links">
           <a
             class="link-secondary"
-            href="https://github.com/devdavco/backend_1"
+            href="https://github.com/devdavco/coworking-light"
             target="_blank"
             rel="noopener noreferrer"
-          >Ver código</a>
+          >Ver repositorio</a>
           <a
             class="link-secondary"
-            href="https://backend-1-seven-murex.vercel.app"
+            href="https://coworking.davidcorrales.dev/"
             target="_blank"
             rel="noopener noreferrer"
-          >Ver demo</a>
+          >Ver en línea (AWS)</a>
         </div>
       </article>
       <article class="project-card">
@@ -266,7 +312,7 @@
           <li>Web Speech API</li>
         </ul>
         <p class="project-note">
-          Publicada en Chrome Web Store, en mejora continua.
+          Publicada en Chrome Web Store. Sigo añadiéndole mejoras.
         </p>
         <div class="project-links">
           <a

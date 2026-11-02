@@ -17,6 +17,32 @@
   --page-padding: 1.5rem;
 }
 
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* Tema claro. El acento se oscurece para mantener contraste en textos pequeños. */
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f7f7f5;
+  --bg-raised: #ffffff;
+  --text: #16181d;
+  --text-secondary: #4b5262;
+  --text-muted: #6b7280;
+  --accent: #985a00;
+  --border: rgba(0, 0, 0, 0.1);
+  --shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Íconos dibujados en blanco (AWS, GitHub, Linux): se invierten en tema claro
+   conservando el tono (el naranja de AWS sigue siendo naranja). */
+[data-theme="light"] img[src$="icons/aws.svg"],
+[data-theme="light"] img[src$="icons/github.svg"],
+[data-theme="light"] img[src$="icons/linux.svg"] {
+  filter: invert(1) hue-rotate(180deg);
+}
+
 /* ===================================================
    Base / reset
    =================================================== */
@@ -30,6 +56,16 @@
 
 html {
   scroll-behavior: smooth;
+  /* Deja visible el título de cada sección bajo la cabecera fija al usar el menú */
+  scroll-padding-top: 80px;
+  /* Oculta la barra de scroll lateral sin desactivar el desplazamiento */
+  scrollbar-width: none;      /* Firefox y Chrome/Edge 121+ */
+  -ms-overflow-style: none;   /* Edge antiguo */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;              /* Safari y Chrome antiguos */
 }
 
 body {
@@ -100,6 +136,8 @@ a {
 .nav-links {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  margin-left: auto;
   gap: 1.25rem;
   font-size: 0.9rem;
   color: var(--text-secondary);
@@ -107,6 +145,41 @@ a {
 
 .nav-links a {
   transition: color var(--transition);
+}
+
+/* Botón de cambio de tema */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.theme-toggle[hidden] {
+  display: none;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* En tema oscuro se ofrece el sol (pasar a claro) y viceversa */
+.theme-icon-moon,
+[data-theme="light"] .theme-icon-sun {
+  display: none;
+}
+
+[data-theme="light"] .theme-icon-moon {
+  display: block;
 }
 
 .nav-links a:hover {
@@ -270,6 +343,10 @@ a {
   font-size: 1.05rem;
 }
 
+.prose-section p + p {
+  margin-top: 1rem;
+}
+
 /* ===================================================
    Formación (timeline)
    =================================================== */
@@ -301,6 +378,11 @@ a {
   font-size: 0.8rem;
   color: var(--accent);
   white-space: nowrap;
+}
+
+/* Segunda línea del estado (p. ej. "8º semestre") debajo de "En curso" */
+.timeline-status-sub {
+  display: block;
 }
 
 .timeline-title {
@@ -348,7 +430,8 @@ a {
 .stack-list {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  /* 200px deja holgura a nombres como "JavaScript" o "Docker Compose" en cualquier navegador */
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
   gap: 0.6rem;
 }
 
@@ -526,6 +609,47 @@ a {
 }
 
 @media (max-width: 640px) {
+  html {
+    scroll-padding-top: 110px;
+  }
+
+  /* Cabecera en dos filas: marca + botón de tema arriba, enlaces debajo */
+  .nav {
+    height: auto;
+    flex-wrap: wrap;
+    row-gap: 0.25rem;
+    padding-block: 0.6rem;
+  }
+
+  .nav-brand {
+    flex: 1;
+  }
+
+  .theme-toggle {
+    order: 2;
+  }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 0.55rem;
+    font-size: 0.8rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 0.15rem;
+  }
+
+  .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-links a {
+    white-space: nowrap;
+  }
+
   .stack-grid {
     grid-template-columns: 1fr;
   }
@@ -533,6 +657,10 @@ a {
   .timeline li {
     grid-template-columns: 1fr;
     gap: 0.5rem;
+  }
+
+  .timeline-status-sub {
+    display: inline;
   }
 
   .contact-label {
@@ -552,11 +680,30 @@ a {
   }
 
   .stack-list {
-    grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
   }
 }
 
-/* Tecnologías con nota "(nociones)": ocupan dos columnas para que la nota no se desborde. */
+/* Tecnologías con nota "(nociones)": ocupan la fila completa para que la nota no se desborde
+   (span 2 creaba una columna extra cuando solo cabía una). */
 .stack-list li:has(.stack-note) {
-  grid-column: span 2;
+  grid-column: 1 / -1;
+}
+
+/* Backend: columnas de al menos 215px para que un ítem con nota corta (Node.js) quepa en una
+   sola columna; así queda Spring Boot | Hibernate, Maven | Node.js y Microservicios a lo ancho. */
+.stack-block-primary .stack-list {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 215px), 1fr));
+}
+
+.stack-list li.stack-item-compact {
+  grid-column: auto;
+}
+
+/* Por debajo de 720px los bloques del stack van en una columna: en dos columnas no caben
+   nombres largos con nota, como "Amazon Aurora (nociones)". */
+@media (max-width: 720px) {
+  .stack-grid {
+    grid-template-columns: 1fr;
+  }
 }
