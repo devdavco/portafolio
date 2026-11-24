@@ -53,6 +53,7 @@
         <a href="#formacion">Formación</a>
         <a href="#stack">Stack</a>
         <a href="#proyectos">Proyectos</a>
+        <!-- <a href="/blog/">Blog</a> -->
         <a href="#contacto">Contacto</a>
       </div>
       <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Cambiar a tema claro" hidden>
@@ -70,8 +71,8 @@
           <!-- <p class="hero-badge"><span class="hero-badge-dot" aria-hidden="true"></span>Abierto a ofertas laborales</p> -->
           <h1 class="hero-title">David Corrales</h1>
           <p class="hero-subtitle">
-            Desarrollador Full Stack Java Junior: Spring Boot en el backend, Angular en el frontend y
-            un primer despliegue en AWS con Docker. Estudiante de último año de Ingeniería
+            Soy desarrollador full stack Java junior: construyo APIs con Spring Boot e interfaces
+            con Angular, y las despliego en AWS con Docker. Estudio el último año de Ingeniería
             Multimedia.
           </p>
           <div class="hero-actions">
@@ -88,6 +89,12 @@
               target="_blank"
               rel="noopener noreferrer"
             >GitHub</a>
+            <a
+              class="link-secondary"
+              href="/David_Corrales_CV.pdf"
+              download
+              type="application/pdf"
+            >CV<span class="visually-hidden"> (descargar PDF)</span></a>
           </div>
         </div>
         <div class="hero-photo-wrap">
@@ -119,6 +126,25 @@
         datos PostgreSQL en Amazon RDS. Ahora me preparo para la certificación AWS Certified Cloud
         Practitioner y sigo explorando otros servicios como Aurora y DynamoDB.
       </p>
+      <p>
+        Mi camino empezó a los 15 años. Mis abuelos notaron mi interés por las computadoras y me
+        inscribieron en un curso de mantenimiento y reparación de equipos. Fue una gran sorpresa:
+        gracias a ese curso generé mis primeros ingresos como independiente y, desde entonces, mi
+        curiosidad por entender cómo funciona no solo el hardware sino también el software no ha
+        parado de crecer.
+      </p>
+      <p>
+        Con el tiempo vi que en esta profesión hay mucho por aprender, así que empecé a asistir a
+        eventos de desarrollo y hackathons, y a viajar fuera de mi ciudad para participar en
+        encuentros de tecnología. Me encanta ver cómo, a medida que avanzo, aparecen errores y
+        también la destreza que debo cultivar para resolverlos.
+      </p>
+      <p>
+        Después de 6 años como independiente, busco una práctica o un primer empleo como
+        desarrollador Java, para aportar mis conocimientos en la construcción de software junto a
+        personas que compartan esa misma motivación. Por eso sigo formándome cada día, a la espera
+        de la oportunidad de demostrar lo que puedo aportar.
+      </p>
     </section>
 
     <!-- ===================== Formación ===================== -->
@@ -130,7 +156,7 @@
           <div class="timeline-body">
             <p class="timeline-title">Ingeniería Multimedia</p>
             <p class="timeline-detail">
-              Universidad de San Buenaventura Cali, cursando trabajo de grado
+              Universidad de San Buenaventura Cali. Estoy haciendo mi trabajo de grado.
             </p>
           </div>
         </li>
@@ -138,14 +164,14 @@
           <span class="timeline-status">En curso</span>
           <div class="timeline-body">
             <p class="timeline-title">Bootcamp Desarrollador Junior Full-Stack/Java</p>
-            <p class="timeline-detail">Generation Colombia, culminando</p>
+            <p class="timeline-detail">Generation Colombia. Estoy terminando el bootcamp.</p>
           </div>
         </li>
         <li>
           <span class="timeline-status">En preparación</span>
           <div class="timeline-body">
             <p class="timeline-title">AWS Certified Cloud Practitioner</p>
-            <p class="timeline-detail">Certificación de fundamentos de la nube de AWS</p>
+            <p class="timeline-detail">Me preparo para la certificación de fundamentos de la nube de AWS.</p>
           </div>
         </li>
       </ul>
@@ -208,8 +234,7 @@
             <li><img src="img/icons/aws.svg" alt="" width="28" height="28" loading="lazy" />AWS EC2</li>
             <li><img src="img/icons/aws.svg" alt="" width="28" height="28" loading="lazy" />Amazon RDS</li>
             <li><img src="img/icons/docker.svg" alt="" width="28" height="28" loading="lazy" />Docker</li>
-            <li><img src="img/icons/docker.svg" alt="" width="28" height="28" loading="lazy" />Docker Compose</li>
-            <li><img src="img/icons/docker.svg" alt="" width="28" height="28" loading="lazy" />Docker Hub</li>
+            <li><img src="img/icons/kubernetes.svg" alt="" width="28" height="28" loading="lazy" />Kubernetes</li>
             <li><img src="img/icons/nginx.svg" alt="" width="28" height="28" loading="lazy" />nginx</li>
             <li><img src="img/icons/linux.svg" alt="" width="28" height="28" loading="lazy" />Linux / SSH</li>
           </ul>
@@ -233,10 +258,10 @@
       <article class="project-card">
         <a
           class="project-media"
-          href="https://coworking.davidcorrales.dev/"
+          href="https://github.com/devdavco/coworking-light"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Abrir el Sistema de Reservas desplegado en AWS"
+          aria-label="Abrir el repositorio del sistema de reservas para coworking"
         >
           <img
             src="img/coworking-dashboard.webp"
@@ -246,7 +271,11 @@
             loading="lazy"
           />
         </a>
-        <h3 class="project-title">Despliegue en AWS de un Sistema de Reservas para Coworking</h3>
+        <p class="project-meta">
+          <span class="project-kind">Personal</span>
+          <span class="project-status">Demo temporalmente fuera de línea</span>
+        </p>
+        <h3 class="project-title">Despliegue en AWS de un sistema de reservas para coworking</h3>
         <p class="project-description">
           Puse en producción una aplicación web de reservas para coworking, con API en Spring Boot,
           frontend en Angular y base de datos PostgreSQL. Configuré los entornos de desarrollo y
@@ -262,12 +291,39 @@
           <li>nginx</li>
         </ul>
         <p class="project-note">
-          El backend y el frontend van en contenedores Docker, así funcionan igual en mi equipo que
-          en el servidor. Construyo las imágenes, las subo a Docker Hub y una instancia EC2 (un
-          servidor virtual de AWS) las descarga y las ejecuta. nginx sirve la página y pasa las
-          peticiones a la API. La base de datos está en Amazon RDS, el PostgreSQL administrado de
-          AWS, que se ocupa de los respaldos y el mantenimiento.
+          Empaqueté el backend y el frontend en contenedores Docker para que funcionen igual en mi
+          equipo y en el servidor. Construyo las imágenes, las subo a Docker Hub y una instancia EC2
+          (un servidor virtual de AWS) las descarga y ejecuta. nginx sirve la página y redirige las
+          peticiones a la API. La base de datos está en Amazon RDS, el PostgreSQL administrado de AWS,
+          que se encarga de los respaldos y el mantenimiento. Por ahora la demo está apagada, pero el
+          repositorio tiene capturas del proyecto.
         </p>
+        <div class="project-details">
+          <div>
+           <h4>Desafíos y soluciones</h4>
+            <ul>
+              <li>Se acabó la prueba en Railway; migré el backend a AWS con EC2 y RDS.</li>
+              <li>Aprendí el flujo del código al despliegue practicando en la consola de AWS.</li>
+              <li>Asocié una Elastic IP a EC2 para mantener la IP fija.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Características clave</h4>
+            <ul>
+              <li>Roles de cliente y administrador.</li>
+              <li>Reservas sin solapamientos gracias al bloqueo de fila en la base de datos.</li>
+              <li>Autenticación con JWT.</li>
+              <li>Migraciones con Flyway e integración continua con GitHub Actions.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Lo que aprendí</h4>
+            <ul>
+              <li>Llevé el proyecto de principio a fin: del primer sprint al despliegue en la nube.</li>
+              <li>Ahora distingo los tipos de instancia EC2.</li>
+            </ul>
+          </div>
+        </div>
         <div class="project-links">
           <a
             class="link-secondary"
@@ -275,12 +331,6 @@
             target="_blank"
             rel="noopener noreferrer"
           >Ver repositorio</a>
-          <a
-            class="link-secondary"
-            href="https://coworking.davidcorrales.dev/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >Ver en línea (AWS)</a>
         </div>
       </article>
       <article class="project-card">
@@ -299,21 +349,45 @@
             loading="lazy"
           />
         </a>
+        <p class="project-meta">
+          <span class="project-kind">Personal</span>
+        </p>
         <h3 class="project-title">Hotkey Translate</h3>
         <p class="project-description">
-          Extensión de Chrome (Manifest V3) para traducir texto seleccionado con un atajo de teclado
-          (Ctrl + Shift + 1) y escuchar su pronunciación sin salir de la página. Abre Google
-          Translate con la selección ya traducida y usa la Web Speech API para el audio. Antes se
+          Creé una extensión de Chrome (Manifest V3) que traduce el texto seleccionado con un atajo
+          de teclado (Ctrl + Shift + 1) y reproduce su pronunciación (Ctrl + Shift + 2) sin salir de
+          la página. Abre Google Translate con la selección ya traducida y reproduce el audio desde
+          un documento offscreen, con la voz del sistema (chrome.tts) como respaldo. Antes se
           llamaba Simple Translate.
         </p>
         <ul class="project-tags">
           <li>JavaScript</li>
-          <li>Chrome Extension (Manifest V3)</li>
-          <li>Web Speech API</li>
+          <li>Extensión de Chrome (Manifest V3)</li>
+          <li>Offscreen API</li>
+          <li>chrome.tts</li>
         </ul>
         <p class="project-note">
-          Publicada en Chrome Web Store. Sigo añadiéndole mejoras.
+          La publiqué en Chrome Web Store y sigo añadiéndole mejoras.
         </p>
+        <div class="project-details">
+          <div>
+            <h4>Desafíos y soluciones</h4>
+            <ul>
+              <li>Quería traducir rápido con un par de teclas; lo resolví con atajos de teclado.</li>
+              <li>La empecé desde cero: estudié y programé hasta tenerla funcionando.</li>
+              <li>Me registré como developer en Chrome Web Store para publicarla.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Características clave</h4>
+            <ul>
+              <li>Traduce el texto seleccionado con Ctrl + Shift + 1.</li>
+              <li>Reproduce la pronunciación con Ctrl + Shift + 2.</li>
+              <li>Audio desde un documento offscreen, con chrome.tts como respaldo.</li>
+              <li>Publicada en Chrome Web Store con Manifest V3.</li>
+            </ul>
+          </div>
+        </div>
         <div class="project-links">
           <a
             class="link-secondary"
@@ -326,10 +400,130 @@
             href="https://github.com/devdavco/hotkey-translate"
             target="_blank"
             rel="noopener noreferrer"
-          >Ver código</a>
+          >Ver repositorio</a>
+        </div>
+      </article>
+      <article class="project-card">
+        <a
+          class="project-media"
+          href="https://devdavco.github.io/TechnoPet/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Abrir el sitio en línea de TechnoPet"
+        >
+          <img
+            src="img/technopet.webp"
+            alt="Página de inicio de TechnoPet: menú con catálogo, nosotros y contacto, y un carrusel de productos tecnológicos para mascotas"
+            width="1400"
+            height="560"
+            loading="lazy"
+          />
+        </a>
+        <p class="project-meta">
+          <span class="project-kind project-kind-team">En equipo</span>
+          <span class="project-status">En construcción</span>
+        </p>
+        <h3 class="project-title">TechnoPet, tienda virtual de productos para mascotas</h3>
+        <p class="project-description">
+          Tienda virtual que construimos en equipo en el bootcamp de Generation Colombia (Grupo 9,
+          cohorte 14). Tiene catálogo de productos, carrito, registro e inicio de sesión y un panel
+          de administración. El backend es una API en Spring Boot con autenticación mediante JWT y
+          los datos viven en MySQL. Sigue en construcción.
+        </p>
+        <ul class="project-tags">
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>JavaScript</li>
+          <li>Java 21</li>
+          <li>Spring Boot</li>
+          <li>Spring Security</li>
+          <li>JWT</li>
+          <li>Spring Data JPA</li>
+          <li>MySQL</li>
+          <li>Gradle</li>
+        </ul>
+        <p class="project-note">
+          Mi contribución: hice el footer, la página de login a partir del wireframe del equipo, la sección 
+          "Conoce Techno Pet" de la página "sobre nosotros" y, en el catálogo, la barra de búsqueda y la paginación. 
+          También apoyé la implementación de JWT, las pruebas de la API con Bruno | Postman y el uso de localStorage. 
+          Cada quien tenía tareas asignadas, pero revisábamos e integrábamos el trabajo en conjunto
+        </p>
+        <p class="project-note">
+          Colaboradores (Grupo 9, cohorte 14):
+          <a
+            class="link-secondary"
+            href="https://github.com/JessicaMP"
+            target="_blank"
+            rel="noopener noreferrer"
+          >JessicaMP</a>,
+          <a
+            class="link-secondary"
+            href="https://github.com/stefa77777"
+            target="_blank"
+            rel="noopener noreferrer"
+          >stefa77777</a> y
+          <a
+            class="link-secondary"
+            href="https://github.com/Juanramosac"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Juanramosac</a>.
+        </p>
+        <div class="project-details">
+          <div>
+            <h4>Desafíos y soluciones</h4>
+            <ul>
+              <li>Éramos cuatro en un repo: una rama por funcionalidad para no pisarnos el código.</li>
+              <li>Acordamos endpoints y formatos de datos antes de conectar frontend y backend.</li>
+              <li>Ayudé con JWT: un filtro de Spring Security valida el token antes del controlador.</li>
+              <li>Probamos la API con Bruno y Postman y guardamos datos con localStorage.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Características clave</h4>
+            <ul>
+              <li>Registro e inicio de sesión con JWT (Spring Security y JJWT).</li>
+              <li>API REST por capas, con validación de datos y manejo de excepciones.</li>
+              <li>Catálogo por categorías con búsqueda y paginación, carrito y panel de administración.</li>
+              <li>MySQL con modelo entidad-relación, scripts de creación y datos de prueba.</li>
+              <li>Frontend desplegado en GitHub Pages.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="project-links">
+          <a
+            class="link-secondary"
+            href="https://devdavco.github.io/TechnoPet/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Ver sitio en línea</a>
+          <a
+            class="link-secondary"
+            href="https://github.com/devdavco/TechnoPet"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Ver repositorio</a>
         </div>
       </article>
     </section>
+
+    <!-- ===================== Blog (vista previa) ===================== -->
+    <!-- Blog oculto por ahora. Para publicarlo: descomentar este bloque y el enlace "Blog" del nav,
+         quitar el redirect de /blog en vercel.json y el noindex de blog/index.html (ver README).
+    <section id="blog" class="section blog-section" aria-labelledby="blog-heading">
+      <h2 id="blog-heading">Blog</h2>
+      <ul class="post-list">
+        <li>
+          <a class="post-link" href="/blog/articulo-ejemplo">[TODO: título del artículo]</a>
+          <p class="post-meta">
+            <span>[TODO: fecha]</span>
+            <span>[TODO: etiquetas]</span>
+          </p>
+        </li>
+      </ul>
+      <p class="blog-more"><a class="link-secondary" href="/blog/">Ver todos los artículos</a></p>
+    </section>
+    -->
 
     <!-- ===================== Contacto ===================== -->
     <section id="contacto" class="section contact-section" aria-labelledby="contacto-heading">

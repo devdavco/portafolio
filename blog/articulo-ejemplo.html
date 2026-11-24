@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- TODO(David): reemplazar este artículo de ejemplo por uno real (ver blog/plantilla-articulo.html) -->
+  <title>[TODO: título del artículo] - Blog de David Corrales</title>
+  <meta name="description" content="[TODO: resumen del artículo en una frase]" />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#14161a" />
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <script>
+    // Aplica el tema guardado (o el del sistema) antes de pintar, para evitar parpadeos.
+    (function () {
+      try {
+        var theme = localStorage.getItem("theme");
+        if (theme !== "light" && theme !== "dark") {
+          theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        }
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="Principal">
+      <a class="nav-brand" href="/#hero">David Corrales</a>
+      <div class="nav-links">
+        <a href="/#sobre-mi">Sobre mí</a>
+        <a href="/#formacion">Formación</a>
+        <a href="/#stack">Stack</a>
+        <a href="/#proyectos">Proyectos</a>
+        <a href="/blog/" aria-current="page">Blog</a>
+        <a href="/#contacto">Contacto</a>
+      </div>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Cambiar a tema claro" hidden>
+        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <article class="section prose-section post" aria-labelledby="post-title">
+      <header class="post-header">
+        <!-- TODO(David): título del artículo -->
+        <h1 id="post-title">[TODO: título del artículo]</h1>
+        <div class="post-meta">
+          <!-- TODO(David): fecha de publicación; usar <time datetime="AAAA-MM-DD">fecha legible</time> -->
+          <span>[TODO: fecha]</span>
+        </div>
+        <!-- TODO(David): etiquetas del artículo (por ejemplo: Java, Spring Boot, buenas prácticas) -->
+        <ul class="project-tags">
+          <li>[TODO: etiqueta]</li>
+        </ul>
+      </header>
+
+      <!-- TODO(David): introducción del artículo: qué problema o tema trata y por qué importa -->
+      <p>[TODO: introducción]</p>
+
+      <h2>[TODO: subtítulo]</h2>
+      <!-- TODO(David): cuerpo del artículo -->
+      <p>[TODO: cuerpo del artículo]</p>
+
+      <!-- TODO(David): ejemplo de código Java del artículo -->
+      <pre tabindex="0"><code class="language-java">// [TODO: código Java del artículo]
+public class Ejemplo {
+    public static void main(String[] args) {
+        // [TODO]
+    }
+}</code></pre>
+
+      <h2>[TODO: conclusiones o lecciones aprendidas]</h2>
+      <!-- TODO(David): cierre del artículo -->
+      <p>[TODO: cierre]</p>
+
+      <p class="post-back"><a class="link-secondary" href="/blog/">Volver al blog</a></p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>David Corrales, <span id="year"></span>. Cali, Colombia.</p>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
