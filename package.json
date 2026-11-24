@@ -2,7 +2,7 @@
   "name": "portafolio",
   "version": "1.0.0",
   "private": true,
-  "description": "Landing 'Proximamente' de David Corrales - HTML, CSS y JS puro.",
+  "description": "Portafolio de David Corrales, desarrollador full stack Java junior. HTML, CSS y JavaScript puro.",
   "scripts": {
     "dev": "serve . -l 3000",
     "start": "serve . -l 3000"
